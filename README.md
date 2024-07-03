@@ -1,20 +1,20 @@
-Create a new folder on your local machine\n
-open vs code terminal:\n
-git clone https://github.com/dennisyau96/csis3275_project_frontend.git\n
-git branch(optional, to see how many branches and which branch your are in)\n
-git switch <Your branch name, e.g.Kevin>\n
+Create a new folder on your local machine
+open vs code terminal:
+git clone https://github.com/dennisyau96/csis3275_project_frontend.git
+git branch(optional, to see how many branches and which branch your are in)
+git switch <Your branch name, e.g.Kevin>
 
-be sure you install node package manager\n
-in terminal, type:\n
-npm -v\n
+be sure you install node package manager
+in terminal, type:
+npm -v
 
-if installed, type: \n
-cd <csis3275_project_frontend's path>(The local repo that you have just cloned)\n
-npm i\n
-npm run dev\n
-visit localhost:5173\n
+if installed, type: 
+cd <csis3275_project_frontend's path>(The local repo that you have just cloned)
+npm i
+npm run dev
+visit localhost:5173
 
-Now you can see the webpage\n
+Now you can see the webpage
 
 
 
