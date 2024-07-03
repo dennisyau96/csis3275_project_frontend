@@ -1,3 +1,30 @@
+Create a new folder on your local machine
+open vs code terminal:
+git clone https://github.com/dennisyau96/csis3275_project_frontend.git
+git branch(optional, to see how many branches and which branch your are in)
+git switch <Your branch name, e.g.Kevin>
+
+be sure you install node package manager
+in terminal, type:
+npm -v
+
+if installed, type: 
+cd <csis3275_project_frontend's path>(The local repo that you have just cloned)
+npm i
+npm run dev
+visit localhost:5173
+
+Now you can see the webpage
+
+
+
+
+
+
+
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
