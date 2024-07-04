@@ -2,7 +2,7 @@ Create a new folder on your local machine
 open vs code terminal:
 git clone https://github.com/dennisyau96/csis3275_project_frontend.git
 git branch(optional, to see how many branches and which branch your are in)
-git switch <Your branch name, e.g.Kevin>
+git checkout <Your branch name, e.g.Kevin>
 
 be sure you install node package manager
 in terminal, type:
