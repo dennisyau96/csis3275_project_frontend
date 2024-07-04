@@ -11,7 +11,7 @@ import SignUp from "./Views/signUp/SignUp";
 // import SystemAdmin from "./Views/systemAdmin/SystemAdmin";
 import Home from "./Views/home/Home";
 import Header from "./component/header/Header";
-// import ErrorPage from "Views/ErrorPage/ErrorPage";
+import Error from "./Views/Error/Error";
 
 function App() {
   return (
@@ -26,11 +26,11 @@ function App() {
             {/* <Route path="/renter" element={<Renter />} />
             <Route path="/owner" element={<Owner />} /> */}
             <Route path="/notification" />
-            <Route path="/managebooking" />
+            <Route path="/booking" />
             <Route path="/dogs" />
             <Route path="/profile" />
             {/* <Route path="/systemAdmin" element={<SystemAdmin />} /> */}
-            <Route path="/*" />
+            <Route path="/*" element={<Error />} />
           </Route>
         </Routes>
       </div>

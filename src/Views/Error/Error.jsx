@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function ErrorPage() {
+function Error() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,3 +17,5 @@ export default function ErrorPage() {
     </div>
   );
 }
+
+export default Error;
