@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -15,12 +14,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/renter" element={<Renter />}></Route>
-        <Route path="/owner" element={<Owner />}></Route>
-        <Route path="/systemAdmin" element={<SystemAdmin />}></Route>
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/renter" element={<Renter />} />
+        <Route path="/owner" element={<Owner />} />
+        <Route path="/systemAdmin" element={<SystemAdmin />} />
       </Routes>
     </>
   );
