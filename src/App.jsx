@@ -9,13 +9,15 @@ import Owner from "./Views/owner/Owner";
 import Renter from "./Views/renter/Renter";
 import SystemAdmin from "./Views/systemAdmin/SystemAdmin";
 import Home from "./Views/home/Home";
+import Header from "./component/header/Header";
 
 function App() {
   return (
     <>
+      <Header />
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/renter" element={<Renter />} />
         <Route path="/owner" element={<Owner />} />
