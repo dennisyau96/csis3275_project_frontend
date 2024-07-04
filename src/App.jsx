@@ -6,9 +6,9 @@ axios.defaults.auth = true;
 //import
 import Login from "./Views/login/Login";
 import SignUp from "./Views/signUp/SignUp";
-import Owner from "./Views/owner/Owner";
-import Renter from "./Views/renter/Renter";
-import SystemAdmin from "./Views/systemAdmin/SystemAdmin";
+// import Owner from "./Views/owner/Owner";
+// import Renter from "./Views/renter/Renter";
+// import SystemAdmin from "./Views/systemAdmin/SystemAdmin";
 import Home from "./Views/home/Home";
 import Header from "./component/header/Header";
 // import ErrorPage from "Views/ErrorPage/ErrorPage";
