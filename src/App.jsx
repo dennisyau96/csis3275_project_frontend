@@ -18,22 +18,23 @@ function App() {
   return (
     <>
       <Header />
-
-      <Routes>
-        <Route path="/">
-          <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          {/* <Route path="/renter" element={<Renter />} />
+      <section className="m-2">
+        <Routes>
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* <Route path="/renter" element={<Renter />} />
             <Route path="/owner" element={<Owner />} /> */}
-          <Route path="/notification" />
-          <Route path="/booking" />
-          <Route path="/dogs" />
-          <Route path="/profile" element={<Owner />} />
-          {/* <Route path="/systemAdmin" element={<SystemAdmin />} /> */}
-          <Route path="/*" element={<Error />} />
-        </Route>
-      </Routes>
+            <Route path="/notification" />
+            <Route path="/booking" />
+            <Route path="/dogs" />
+            <Route path="/profile" element={<Owner />} />
+            {/* <Route path="/systemAdmin" element={<SystemAdmin />} /> */}
+            <Route path="/*" element={<Error />} />
+          </Route>
+        </Routes>
+      </section>
     </>
   );
 }
