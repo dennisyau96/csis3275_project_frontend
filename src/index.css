@@ -8,6 +8,9 @@ body {
   min-width: 320px;
   min-height: 100vh; */
   background-color: coral;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 button {
