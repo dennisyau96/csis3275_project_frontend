@@ -12,28 +12,27 @@ import SignUp from "./Views/signUp/SignUp";
 import Home from "./Views/home/Home";
 import Header from "./component/header/Header";
 import Error from "./Views/Error/Error";
+import NavBar from "./component/navBar/NavBar";
 
 function App() {
   return (
     <>
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            {/* <Route path="/renter" element={<Renter />} />
+      <Header />
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/renter" element={<Renter />} />
             <Route path="/owner" element={<Owner />} /> */}
-            <Route path="/notification" />
-            <Route path="/booking" />
-            <Route path="/dogs" />
-            <Route path="/profile" />
-            {/* <Route path="/systemAdmin" element={<SystemAdmin />} /> */}
-            <Route path="/*" element={<Error />} />
-          </Route>
-        </Routes>
-      </div>
+          <Route path="/notification" />
+          <Route path="/booking" />
+          <Route path="/dogs" />
+          <Route path="/profile" />
+          {/* <Route path="/systemAdmin" element={<SystemAdmin />} /> */}
+          <Route path="/*" element={<Error />} />
+        </Route>
+      </Routes>
     </>
   );
 }

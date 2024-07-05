@@ -1,7 +1,23 @@
+import DogCard from "../../component/dog/DogCard";
+
 function Home() {
   return (
     <>
       <h1>This is home page.</h1>
+      <div className="flex flex-wrap">
+        <DogCard />
+        <DogCard />
+        <DogCard />
+        <DogCard />
+        <DogCard />
+        <DogCard /> <DogCard />
+        <DogCard />
+        <DogCard /> <DogCard />
+        <DogCard />
+        <DogCard /> <DogCard />
+        <DogCard />
+        <DogCard />
+      </div>
     </>
   );
 }
