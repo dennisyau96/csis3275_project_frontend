@@ -1,8 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 function NavBar() {
   return (
     <>
-      <div className="flex inset-x-0 border-b-2 justify-end ">
+      <div className="flex flex-wrap inset-x-0 border-b-2 justify-end ">
         <NavLink
           className="border-2 px-3 py-1 text-black hover:bg-orange-400 hover:text-white active:bg-orange-400 active:text-white"
           to="/"
@@ -27,6 +27,34 @@ function NavBar() {
         >
           Profile
         </NavLink>
+
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Dropdown button
+          </button>
+          <ul className="dropdown-menu">
+            <li>
+              <Link className="dropdown-item" href="#">
+                Action
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" href="#">
+                Another action
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" href="#">
+                Something else here
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );
