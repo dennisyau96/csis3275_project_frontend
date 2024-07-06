@@ -12,7 +12,7 @@ function DogCard() {
           <h5 className="text-lg font-bold">Dog name</h5>
           <div className="h-20">This dog is a good dog.</div>
           <div className=" grid grid-cols-2 space-x-3 justify-items-center">
-            <button className=" inline bg-orange-400 p-1 w-auto text-center border-black border-2 shadow-sm hover:bg-blue-300">
+            <button className=" inline bg-red-400 p-1 w-auto text-center border-black border-2 shadow-sm hover:bg-blue-300">
               Details
             </button>
             <button className=" inline bg-orange-400 p-1 w-20 text-center  border-black border-2 shadow-sm  hover:bg-red-200">
