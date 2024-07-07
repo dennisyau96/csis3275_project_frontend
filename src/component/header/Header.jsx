@@ -3,25 +3,28 @@ import NavBar from "../navBar/NavBar";
 function Header() {
   return (
     <>
-      <div className="sticky inset-x-0 top-0 bg-white ">
+      <div className="sticky inset-x-0 top-0 bg-white shadow-lg bg-image ">
         {/*---sign in sign up top bar---*/}
         <div className="block top-2 text-right p-4 inset-x-0   ">
-          <NavLink to="/login" className="p-2 mr-5 border-2 ">
+          <NavLink
+            to="/login"
+            className="p-2 mr-5 border-2 hover:bg-orange-400 "
+          >
             Sign in
           </NavLink>
-          <NavLink to="/signup" className="p-2 border-2">
+          <NavLink to="/signup" className="p-2 border-2 hover:bg-orange-400">
             Sign up
           </NavLink>
-          <NavLink to="/admin" className="p-2 border-2">
+          <NavLink to="/admin" className="p-2 border-2 hover:bg-orange-400">
             admin
           </NavLink>
         </div>
 
         {/*---icon DogGo search bar---*/}
-        <div className="  flex flex-wrap gap-auto pb-4 inset-x-0 items-baseline ">
+        <div className="  flex flex-wrap gap-auto pb-2 inset-x-0 items-center ">
           <div id="headerLeftDiv" className="col flex flex-auto">
-            <img src="" alt="dog photo" className="p-2 h-24 w-24  "></img>
-            <h1 className="p-2 text-6xl text-orange-500 font-bold">
+            <img src="" alt="dog photo" className="p-2 h-24 w-24"></img>
+            <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer">
               <NavLink to="/">DogGo!</NavLink>
             </h1>
           </div>

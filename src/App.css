@@ -3,3 +3,31 @@
   min-width: 360px;
   height: 100%;
 }
+
+.calendar {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.calendar-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.calendar-body {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+}
+
+.calendar-day {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: center;
+}
+
+.calendar-day.disabled {
+  color: #adb5bd;
+}
