@@ -46,8 +46,13 @@ function Owner() {
         </div>
       </div>
       <div>
-        <button className="p-2 m-2 bg-gray-200">Verify</button>
-        <button className="p-2 m-2 bg-gray-200"> Update</button>
+        <button className="p-2 m-2 border-black bg-gray-200 border-2  hover:bg-green-200 shadow-lg">
+          Verify
+        </button>
+        <button className="p-2 m-2 border-black bg-gray-200 border-2 hover:bg-green-200 shadow-lg">
+          {" "}
+          Update
+        </button>
       </div>
     </>
   );
