@@ -1,3 +1,4 @@
+import DogProfileCard from "../../component/dog/DogProfileCard";
 function OwnerDogList() {
   return (
     <>
@@ -7,6 +8,10 @@ function OwnerDogList() {
           Add new dog
         </button>
       </div>
+      <DogProfileCard />
+      <DogProfileCard />
+      <DogProfileCard />
+      <DogProfileCard />
     </>
   );
 }
