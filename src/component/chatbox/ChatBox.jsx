@@ -1,8 +1,6 @@
 function ChatBox() {
-  return (
-    <>
-      <h1>Chat Box</h1>
-    </>
-  );
+  <>
+    <h1>ChatBox</h1>
+  </>;
 }
 export default ChatBox;
