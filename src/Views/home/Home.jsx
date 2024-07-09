@@ -1,6 +1,7 @@
 import DogCard from "../../component/dog/DogCard";
 import BookingRequestCard from "../../component/ManageBooking/BookingRequestCard";
 import NotificationCard from "../../component/Notification/NotificationCard";
+import NotificationProfile from "../../component/Notification/NotificationProfile";
 function Home() {
   return (
     <>
@@ -22,8 +23,6 @@ function Home() {
         <DogCard />
         <DogCard />
         <DogCard />
-        <NotificationCard />
-        <BookingRequestCard />
       </div>
     </>
   );

@@ -17,3 +17,15 @@ body {
 button {
   cursor: pointer;
 }
+
+.notificationProfile {
+  position: absolute;
+  top: 13rem;
+  right: 33rem;
+  width: auto;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid gray;
+  max-height: 400px;
+  overflow-y: scroll;
+}

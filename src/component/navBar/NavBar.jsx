@@ -1,5 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import NotificationProfile from "../Notification/NotificationProfile";
+import { useState } from "react";
 function NavBar() {
+  const [openNotification, setOpenNotification] = useState(false);
   return (
     <>
       <nav className="flex flex-wrap inset-x-0 border-b-2 border-black justify-end container-fluid text-sm right-0  ">
@@ -9,7 +12,10 @@ function NavBar() {
         >
           Home
         </NavLink>
-        <button className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white">
+        <button
+          className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
+          onClick={() => setOpenNotification((prev) => !prev)}
+        >
           Notification
         </button>
         <NavLink
@@ -38,6 +44,7 @@ function NavBar() {
           Dog Profiles
         </NavLink>
       </nav>
+      {openNotification && <NotificationProfile />}
     </>
   );
 }
