@@ -1,4 +1,8 @@
+import AcceptRequestCard from "./AcceptRequestCard";
+import { useState } from "react";
+
 function BookingRequestCard() {
+  const [openAcceptRequest, setOpenAcceptRequest] = useState(false);
   return (
     <>
       <div className="w-11/12 h-48 m-4 bg-white rounded-md border-2 border-white">
@@ -14,11 +18,15 @@ function BookingRequestCard() {
           <button className=" inline bg-red-400 p-1 w-20 text-center border-black border-2 shadow-sm hover:bg-blue-300">
             Chat
           </button>
-          <button className=" inline bg-orange-400 p-1 w-30 text-center border-black border-2 shadow-sm  hover:bg-red-200">
-            Approve
+          <button
+            className=" inline bg-orange-400 p-1 w-30 text-center border-black border-2 shadow-sm  hover:bg-red-200"
+            onClick={() => setOpenAcceptRequest((prev) => !prev)}
+          >
+            Accept
           </button>
         </div>
       </div>
+      {openAcceptRequest && <AcceptRequestCard />}
     </>
   );
 }
