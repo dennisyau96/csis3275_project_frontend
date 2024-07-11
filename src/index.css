@@ -29,3 +29,15 @@ button {
   max-height: 400px;
   overflow-y: scroll;
 }
+
+.acceptRequestCard {
+  position: fixed;
+  top: 15rem;
+  right: 33rem;
+  width: 600px;
+  height: 400px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid black;
+  max-height: 400px;
+}
