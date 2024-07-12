@@ -1,4 +1,34 @@
+import axios from "axios";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { baseURL } from "../../../constant/constant";
 function SignUp() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState();
+
+  //register API function
+  async function register() {
+    if (username == null || username == "") {
+      return toast.error("Please input the username.");
+    } else if (password == null || password == "") {
+      return toast.error("Please input the password.");
+    } else if (confirmPassword == null || confirmPassword == "") {
+      return toast.error("Please input the password again.");
+    } else if (email == null || email == "") {
+      return toast.error("Please input the email.");
+    } else if (password != confirmPassword) {
+      return toast.error("The passwords do not match.");
+    }
+    // else{
+
+    //   const data = await axios.post();
+
+    //   }
+    // }
+  }
+
   return (
     <>
       <h1>This is sign up page.</h1>
@@ -41,6 +71,9 @@ function SignUp() {
                   name="registerUsername"
                   className="border-2"
                   type="text"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                 ></input>
               </div>
               {/*password */}
@@ -52,6 +85,9 @@ function SignUp() {
                   name="registerPassword"
                   className="border-2"
                   type="text"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 ></input>
               </div>
               {/*confirm password */}
@@ -66,6 +102,9 @@ function SignUp() {
                   name="registerConfirmPasword"
                   className="border-2"
                   type="text"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                 ></input>
               </div>
               {/*email  */}
