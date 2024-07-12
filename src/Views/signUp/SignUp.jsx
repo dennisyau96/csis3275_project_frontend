@@ -21,12 +21,12 @@ function SignUp() {
     } else if (password != confirmPassword) {
       return toast.error("The passwords do not match.");
     }
-    else{
+    // else{
 
-      const data = await axios.post()
-        
-      })
-    }
+    //   const data = await axios.post();
+
+    //   }
+    // }
   }
 
   return (
