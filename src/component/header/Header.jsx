@@ -23,7 +23,11 @@ function Header() {
         {/*---icon DogGo search bar---*/}
         <div className="  flex flex-wrap gap-auto pb-2 inset-x-0 items-center ">
           <div id="headerLeftDiv" className="col flex flex-auto">
-            <img src="" alt="dog photo" className="p-2 h-24 w-24"></img>
+            <img
+              src="https://images.dog.ceo/breeds/akita/An_Akita_Inu_resting.jpg"
+              alt="dog photo"
+              className="p-2 h-24 w-24"
+            ></img>
             <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer">
               <NavLink to="/">DogGo!</NavLink>
             </h1>
