@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 
-function DogCard() {
+function DogCard({ dog }) {
   return (
     <>
       <div className="border-2 m-4 w-60 hover:w-72 hover:transition-all rounded-md shadow-md bg-white border-black">
@@ -9,11 +9,17 @@ function DogCard() {
         </div>
 
         <div className="p-2">
-          <h5 className="text-lg font-bold">Dog name</h5>
-          <div className="h-20">This dog is a good dog.</div>
+          <h5 className="text-lg font-bold">{dog.name}</h5>
+          <div className="h-20">
+            {dog.breed}
+            <br />
+            {dog.rental_price_per_hour}
+            <br />
+            {dog.location}
+          </div>
           <div className=" grid grid-cols-2 space-x-3 justify-items-center">
             <button className=" inline bg-red-400 p-1 w-auto text-center border-black border-2 shadow-sm hover:bg-blue-300">
-              Details
+              {dog.additional_message}
             </button>
             <button className=" inline bg-orange-400 p-1 w-20 text-center  border-black border-2 shadow-sm  hover:bg-red-200">
               Apply
