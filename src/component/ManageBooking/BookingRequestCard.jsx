@@ -1,4 +1,7 @@
 import AcceptRequestCard from "./AcceptRequestCard";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
 import { useState } from "react";
 
 function BookingRequestCard() {
@@ -12,7 +15,7 @@ function BookingRequestCard() {
         <div className="p-2">
           <p>Booking Request By:</p>
           <p>Booking Request Date and Time:</p>
-          <p>Renter's Message:</p>
+          <p>Renter&apos;s Message:</p>
         </div>
         <div className=" grid grid-cols-2 space-x-3 float-right m-4">
           <button className=" inline bg-red-400 p-1 w-20 text-center border-black border-2 shadow-sm hover:bg-blue-300">
@@ -26,6 +29,7 @@ function BookingRequestCard() {
           </button>
         </div>
       </div>
+
       {openAcceptRequest && <AcceptRequestCard />}
     </>
   );
