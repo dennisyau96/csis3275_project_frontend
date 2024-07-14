@@ -1,4 +1,19 @@
+import axios from "axios";
+import { baseURL } from "../../../constant/constant";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 function Login() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  async function login() {
+    const data = await axios.post(baseURL + "/auth/login", {
+      username: username,
+      password: password,
+    });
+  }
+
   return (
     <>
       <h1>This is login page.</h1>
@@ -41,6 +56,10 @@ function Login() {
                   name="registerUsername"
                   className="border-2"
                   type="text"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                 ></input>
               </div>
               {/*password */}
@@ -52,6 +71,10 @@ function Login() {
                   name="registerPassword"
                   className="border-2"
                   type="text"
+                  value={password}
+                  onClick={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 ></input>
               </div>
             </div>
@@ -63,7 +86,11 @@ function Login() {
               >
                 Cancel
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => login()}
+              >
                 Sign In
               </button>
             </div>

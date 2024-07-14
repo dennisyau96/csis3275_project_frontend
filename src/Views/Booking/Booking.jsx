@@ -2,6 +2,8 @@ import BookingRequestCard from "../../component/ManageBooking/BookingRequestCard
 import Calendar from "../../component/Calendar/Calendar";
 import ConfirmedBookingCard from "../../component/ManageBooking/ConfirmedBookingCard";
 import LeaveReviewCard from "../../component/Review/LeaveReviewCard";
+import ConfirmedBookingCard from "../../component/ManageBooking/ConfirmedBookingCard";
+import LeaveReviewCard from "../../component/Review/LeaveReviewCard";
 
 export default function Booking() {
   return (
