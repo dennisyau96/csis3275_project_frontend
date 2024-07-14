@@ -1,6 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
 axios.defaults.auth = true;
 
 //import
@@ -18,6 +19,7 @@ import Booking from "./Views/Booking/Booking";
 function App() {
   return (
     <>
+      {/* <Toaster> */}
       <Header />
       <section className="m-2">
         <Routes>
@@ -38,6 +40,7 @@ function App() {
           </Route>
         </Routes>
       </section>
+      <Toaster position="bottom" />
     </>
   );
 }
