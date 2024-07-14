@@ -5,34 +5,45 @@ import NotificationProfile from "../../component/Notification/NotificationProfil
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
 import { useState, useEffect } from "react";
-import { json } from "react-router-dom";
 
 function Home() {
-  const [dogs, setDogs] = useState(() => {
-    const data = window.localStorage.getItem("dogs");
-    return data ? JSON.parse(data) : [];
-  });
+  const [dogs, setDogs] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState();
+  const [userType, setUserName] = useState();
+  // async function fetchData() {
+  //   const dogData = await axios.get(baseURL + "/getDogs");
+  //   localStorage.setItem(
+  //     "dogsString",
+  //     JSON.stringify(dogData.data.data.dogs.content)
+  //   );
+  //   const dogDataString = JSON.stringify(dogData.data.data.dogs.content);
+  //   console.log(dogDataString);
+  //   setDogs(JSON.parse(localStorage.getItem("dogsString")));
+  // }
 
-  async function fetchData() {
-    const res = await axios.get(baseURL + "/getDogs");
-    localStorage.setItem("dogs", JSON.stringify(res.data.data.dogs.content));
+  // useEffect(() => {
+  //   fetchData;
+  // }, []);
 
-    // return JSON.stringify(res);
-  }
+  // async function fetchDogs() {
+  //   const dogData = await axios.get(baseURL + "/getDogs");
+  //   setDogs(dogData.data.dogs.content);
+  // }
   useEffect(() => {
-    fetchData();
-    console.log(dogs);
-  }, []);
+    // fetchDogs();
+  });
 
   return (
     <>
       <h1>This is home page.</h1>
+      {/* <button onClick={() => fetchData()}>reload</button> */}
       <div className="flex flex-wrap flex-col-auto justify">
-        {/* {dogs.map((dog) => {
-          <DogCard dog={dog} />;
+        {/* {dogs.map((dog, i) => {
+          <DogCard key={i} dog={{ dog }} />;
         })} */}
-        <DogCard dog={{ dog }} />
       </div>
+      {/* <p>{JSON.stringify(dogs)}</p> */}
     </>
   );
 }

@@ -15,6 +15,7 @@ import Header from "./component/header/Header";
 import Error from "./Views/Error/Error";
 import OwnerDogList from "./Views/OwnerDogList/OwnerDogList";
 import Booking from "./Views/Booking/Booking";
+import Chatroom from "./Views/Chatroom/Chatroom";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/profile/renter" element={<Renter />} />
             <Route path="/profile/owner/doglist" element={<OwnerDogList />} />
             <Route path="/admin" element={<SystemAdmin />} />
+            {/* <Route path="/chatroom/:username" element={<Chatroom chatroom={} />} /> */}
             <Route path="/*" element={<Error />} />
           </Route>
         </Routes>

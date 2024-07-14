@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+
 export default function DogProfileCard() {
   const [name, setName] = useState();
   const [gender, setGender] = useState();
