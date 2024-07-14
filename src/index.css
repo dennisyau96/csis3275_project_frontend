@@ -33,7 +33,8 @@ button {
 .acceptRequestCard {
   position: fixed;
   top: 15rem;
-  right: 33rem;
+  right:15rem;
+  left:15rem; 
   width: 600px;
   height: 400px;
   padding: 10px;
