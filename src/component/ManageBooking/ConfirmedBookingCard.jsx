@@ -1,6 +1,8 @@
 import { useState } from "react";
+import LeaveReviewCard from "../Review/LeaveReviewCard";
 
 function ConfirmedBookingCard() {
+  const [openReview, setOpenReview] = useState(false); 
   return (
     <>
       <div className=" flex w-11/12 h-48 m-4 bg-white rounded-md border-2 border-white">
@@ -16,7 +18,8 @@ function ConfirmedBookingCard() {
           <p>Pick Up Location:</p>
         </div>
         <div className="grid grid-cols-2 space-x-3 float-right mx-2 mt-32">
-          <button className=" inline bg-red-400 p-1 w-35 h-10 text-center border-black border-2 shadow-sm hover:bg-blue-300">
+          <button className=" inline bg-red-400 p-1 w-35 h-10 text-center border-black border-2 shadow-sm hover:bg-blue-300"
+          onClick={() => setOpenReview((prev) => !prev)}>
             Leave Review
           </button>
           <button
@@ -26,6 +29,7 @@ function ConfirmedBookingCard() {
           </button>
         </div>
       </div>
+      {openReview && <LeaveReviewCard/>}
     </>
   );
 }
