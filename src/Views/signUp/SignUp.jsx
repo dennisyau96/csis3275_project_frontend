@@ -3,44 +3,19 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { baseURL } from "../../../constant/constant";
 import { useNavigate } from "react-router-dom";
+axios.defaults.baseURL = "http://localhost:8082/api";
+axios.defaults.withCredentials = false;
+
 function SignUp() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [email, setEmail] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
-
-  //register API function v.1
-  // async function register1(type) {
-  //   if (username == null || username == "") {
-  //     return toast.error("Please input the username.");
-  //   } else if (password == null || password == "") {
-  //     return toast.error("Please input the password.");
-  //   } else if (confirmPassword == null || confirmPassword == "") {
-  //     return toast.error("Please input the password again.");
-  //   } else if (email == null || email == "") {
-  //     return toast.error("Please input the email.");
-  //   } else if (password != confirmPassword) {
-  //     return toast.error("The passwords do not match.");
-  //   } else {
-  //     try {
-  //       const data = await axios.post(baseURL + "auth/register", {
-  //         username: username,
-  //         password: password,
-  //         email: email,
-  //         type: type,
-  //       });
-  //     } catch (err) {
-  //       console.log(err);
-  //       navigate(-1);
-  //     }
-  //   }
-  // }
-
-  //register API function v.2
 
   function clearInput() {
     setUsername("");
@@ -49,26 +24,22 @@ function SignUp() {
     setEmail("");
   }
 
-  async function register2(type) {
+  async function register() {
     if (password != confirmPassword) {
       return toast.error("Passwords do not match.");
     }
     try {
-      const data = await axios.post(baseURL + "auth/register", {
+      const data = await axios.post(baseURL + "/auth/register", {
         username: username,
         password: password,
         email: email,
-        type: type,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        role: role,
       });
 
-      if (data.sucess == false) {
-        console.log(data.data.message);
-        toast.error(data.data.message);
-      } else {
-        toast.success(data.data.message);
-        console.log(data.data.message);
-        clearInput();
-      }
+      toast(data.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -102,6 +73,8 @@ function SignUp() {
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="signUpModalLabel">
                 Sign Up
+                <br />
+                <span>All the field are mandatory.</span>
               </h1>
               <button
                 type="button"
@@ -144,7 +117,6 @@ function SignUp() {
                   value={password}
                 ></input>
               </div>
-
               {/*confirm password */}
               <div className="mb-2">
                 <label
@@ -202,30 +174,50 @@ function SignUp() {
                 <input
                   name="registerEmail"
                   className="border-2"
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 ></input>
               </div>
+              {/* phone */}
+              <div className="mb-2">
+                <label htmlFor="registerPhone" className="mr-2 col-span-1">
+                  Phone
+                </label>
+                <input
+                  name="registerPhone"
+                  className="border-2"
+                  type="text"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                ></input>
+              </div>
             </div>
+
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
-                onClick={() => {
-                  clearInput();
-                }}
+                // onClick={() => {
+                //   clearInput();
+                // }}
               >
                 Cancel
               </button>
+
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={() => {
-                  register2("Owner");
+                  setRole("owner");
+                  setTimeout(1000);
+                  register();
+                  clearInput();
                 }}
                 data-bs-dismiss="modal"
               >
@@ -234,7 +226,12 @@ function SignUp() {
               <button
                 type="button"
                 className="btn bg-orange-200"
-                onClick={() => register2("Renter")}
+                onClick={() => {
+                  setRole("renter");
+                  setTimeout(1000);
+                  register();
+                  clearInput();
+                }}
                 data-bs-dismiss="modal"
               >
                 Register as Renter

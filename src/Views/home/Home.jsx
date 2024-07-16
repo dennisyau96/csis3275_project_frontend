@@ -5,46 +5,39 @@ import NotificationProfile from "../../component/Notification/NotificationProfil
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
 import { useState, useEffect } from "react";
+axios.defaults.baseURL = "http://localhost:8082/api";
+axios.defaults.withCredentials = false;
 
 function Home() {
   const [dogs, setDogs] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState();
-  const [userType, setUserName] = useState();
-  // async function fetchData() {
-  //   const dogData = await axios.get(baseURL + "/getDogs");
-  //   localStorage.setItem(
-  //     "dogsString",
-  //     JSON.stringify(dogData.data.data.dogs.content)
-  //   );
-  //   const dogDataString = JSON.stringify(dogData.data.data.dogs.content);
-  //   console.log(dogDataString);
-  //   setDogs(JSON.parse(localStorage.getItem("dogsString")));
-  // }
 
-  // useEffect(() => {
-  //   fetchData;
-  // }, []);
-
-  // async function fetchDogs() {
-  //   const dogData = await axios.get(baseURL + "/getDogs");
-  //   setDogs(dogData.data.dogs.content);
-  // }
   useEffect(() => {
-    // fetchDogs();
-  });
+    fetchDog();
+    getUser();
+  }, []);
 
-  return (
-    <>
-      <h1>This is home page.</h1>
-      {/* <button onClick={() => fetchData()}>reload</button> */}
-      <div className="flex flex-wrap flex-col-auto justify">
-        {/* {dogs.map((dog, i) => {
-          <DogCard key={i} dog={{ dog }} />;
-        })} */}
-      </div>
-      {/* <p>{JSON.stringify(dogs)}</p> */}
-    </>
-  );
+  async function fetchDog(e) {
+    try {
+      e.preventDefault();
+      const data = await axios.get(`${baseURL}/getDogs`);
+      setDogs((prev) => data.data.dogs.content);
+      console.log(data.data.dogs.content);
+    } catch (err) {
+      console.log(err);
+    }
+
+    return (
+      <>
+        <h1>This is home page.</h1>
+        <button onClick={() => fetchDog()}>reload</button>
+        <div className="flex flex-wrap flex-col-auto justify">
+          {dogs.map((dog, i) => {
+            <DogCard key={i} dog={{ dog }} />;
+          })}
+        </div>
+        <p>{JSON.stringify(dogs)}</p>
+      </>
+    );
+  }
 }
 export default Home;

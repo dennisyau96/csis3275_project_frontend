@@ -1,17 +1,50 @@
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+axios.defaults.baseURL = "http://localhost:8082/api";
+axios.defaults.withCredentials = false;
 
 function Login() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  function clearInput() {
+    setUsername("");
+    setPassword("");
+  }
 
   async function login() {
-    const data = await axios.post(baseURL + "/auth/login", {
-      username: username,
-      password: password,
-    });
+    try {
+      const data = await axios.post(baseURL + "/auth/login", {
+        username: username,
+        password: password,
+      });
+      toast(data.data.message);
+
+      if (data.data.data.token) {
+        localStorage.setItem("jwtToken", data.data.data.token);
+        console.log(localStorage.getItem("jwtToken"));
+
+        try {
+          const config = {
+            headers: {
+              Authorization: localStorage.getItem("jwtToken"),
+            },
+          };
+          const userData = await axios.get(baseURL + "/users/me", config);
+          setUserData(userData.get);
+          // localStorage.setItem("userData", userData);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -54,6 +87,7 @@ function Login() {
                 </label>
                 <input
                   name="registerUsername"
+                  autoFocus
                   className="border-2"
                   type="text"
                   value={username}
@@ -70,9 +104,9 @@ function Login() {
                 <input
                   name="registerPassword"
                   className="border-2"
-                  type="text"
+                  type="password"
                   value={password}
-                  onClick={(e) => {
+                  onChange={(e) => {
                     setPassword(e.target.value);
                   }}
                 ></input>
@@ -83,13 +117,22 @@ function Login() {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={() => {
+                  clearInput();
+                }}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => login()}
+                onClick={() => {
+                  login();
+                  setTimeout(1000);
+
+                  clearInput();
+                }}
+                data-bs-dismiss="modal"
               >
                 Sign In
               </button>
