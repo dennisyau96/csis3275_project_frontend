@@ -19,17 +19,18 @@ export default function DogProfileCard() {
         className="grid grid-cols-6 bg-white m-6 p-4 rounded-md"
       >
         <div id="leftCol" className="  grid-rows-4 col-span-2">
-          <img src="" alt="dog photo"></img>
-          <button>UploadPhoto</button>
-          <div></div>
+          <img className="h-64 w-64 m-1" src="" alt="dog photo"></img>
+          <button className="m-1 btn btn-primary">UploadPhoto</button>
         </div>
-        <div id="rightCol" className=" grid-rows-6 col-span-4">
+        <div id="rightCol" className=" grid-rows-6 col-span-4 m-1">
           {/* row 1 */}
           <div>
-            <label htmlFor="nameInput">Name</label>
-            <input type="text" value={name} id="nameInput" />
-            <label htmlFor="breedInput"></label>
-            <select value={breed} id="breedInput">
+            <label htmlFor="nameInput" className="m-1">
+              Name
+            </label>
+            <input type="text" className="m-1" value={name} id="nameInput" />
+            <label htmlFor="breedInput" className="m-1"></label>
+            <select value={breed} id="breedInput" className="m-1">
               <option defaultValue="---Breed---">---Breed---</option>
               <option value="affenpinscher">affenpinscher</option>
               <option value="african">african</option>
@@ -201,44 +202,59 @@ export default function DogProfileCard() {
           </div>
           {/* row 2*/}
           <div>
-            <label htmlFor="genderInput">Gender</label>
-            <select id="genderInput">
+            <label htmlFor="genderInput" className="m-1">
+              Gender
+            </label>
+            <select id="genderInput" className="m-1">
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            <label htmlFor="birthdayInput">BOD</label>
+            <label htmlFor="birthdayInput" className="m-1">
+              BOD
+            </label>
             <input
               type="date"
-              className="border-black
+              className="border-black m-1
             border-1"
             ></input>
-            <span>Age {}</span>
-            <label htmlFor="sterilizedInput">sterilized</label>
-            <input type="checkbox" id="sterilizedInput" />
+            <span className="m-1">Age {}</span>
+            <label htmlFor="sterilizedInput" className="m-1">
+              sterilized
+            </label>
+            <input className="m-1" type="checkbox" id="sterilizedInput" />
           </div>
           {/* row 3 */}
           <div>
-            <label htmlFor="priceInput">Price</label>
-            <input type="number">{}</input>/hour
+            <label htmlFor="priceInput" className="m-1">
+              Price
+            </label>
+            <input type="number" className="m-1">
+              {}
+            </input>
+            /hour
           </div>
           {/* row 4 */}
           <div>
-            <label htmlFor="availabilityInput">Availability</label>
-            <select id="availabilityInput">
+            <label htmlFor="availabilityInput" className="m-1">
+              Availability
+            </label>
+            <select id="availabilityInput" className="m-1">
               <option></option>
             </select>
           </div>
           {/* row 5 */}
-          <div className="grid grid-row-2">
+          <div className="grid grid-row-2 m-1">
             <label htmlFor="">Special Needs/Message to renters</label>
             <textarea
               value={remarks}
-              className="border-black border-2"
+              className="border-black border-2 m-1"
             ></textarea>
           </div>
           {/* row 6 */}
           <div>
-            <button>Update Dog Profile</button>
+            <button className="m-1 btn bg-green-200 hover:bg-green-300 font-bold">
+              Update Dog Profile
+            </button>
           </div>
         </div>
       </div>

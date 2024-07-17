@@ -1,50 +1,37 @@
 import DogCard from "../../component/dog/DogCard";
-import BookingRequestCard from "../../component/ManageBooking/BookingRequestCard";
-import NotificationCard from "../../component/Notification/NotificationCard";
-import NotificationProfile from "../../component/Notification/NotificationProfile";
+
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
-function Home() {
+export default function Home() {
   const [dogs, setDogs] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState();
-  const [userType, setUserName] = useState();
-  // async function fetchData() {
-  //   const dogData = await axios.get(baseURL + "/getDogs");
-  //   localStorage.setItem(
-  //     "dogsString",
-  //     JSON.stringify(dogData.data.data.dogs.content)
-  //   );
-  //   const dogDataString = JSON.stringify(dogData.data.data.dogs.content);
-  //   console.log(dogDataString);
-  //   setDogs(JSON.parse(localStorage.getItem("dogsString")));
-  // }
 
-  // useEffect(() => {
-  //   fetchData;
-  // }, []);
+  async function fetchDog() {
+    try {
+      const res = await axios.get(baseURL + "/getDogs");
+      const dogData = res.data.data.dogs.content;
+      setTimeout(1000);
+      setDogs(dogData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  // async function fetchDogs() {
-  //   const dogData = await axios.get(baseURL + "/getDogs");
-  //   setDogs(dogData.data.dogs.content);
-  // }
   useEffect(() => {
-    // fetchDogs();
-  });
+    fetchDog();
+  }, []);
 
   return (
     <>
-      <h1>This is home page.</h1>
-      {/* <button onClick={() => fetchData()}>reload</button> */}
-      <div className="flex flex-wrap flex-col-auto justify">
-        {/* {dogs.map((dog, i) => {
-          <DogCard key={i} dog={{ dog }} />;
-        })} */}
+      <div className="flex flex-wrap">
+        {dogs.map((dog) => (
+          <div key={dog.id}>
+            <DogCard dog={dog} />
+          </div>
+        ))}
       </div>
-      {/* <p>{JSON.stringify(dogs)}</p> */}
     </>
   );
 }
-export default Home;

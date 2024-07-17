@@ -33,8 +33,8 @@ button {
 .acceptRequestCard {
   position: fixed;
   top: 15rem;
-  right:15rem;
-  left:15rem; 
+  right: 15rem;
+  left: 15rem;
   width: 600px;
   height: 400px;
   padding: 10px;
@@ -46,11 +46,11 @@ button {
 .leaveReviewCard {
   position: fixed;
   top: 15rem;
-  right:15rem;
-  left:15rem; 
+  right: 15rem;
+  left: 15rem;
   width: 500px;
   height: 350px;
-  padding:5px;
+  padding: 5px;
   background-color: white;
   border: 1px solid black;
 }

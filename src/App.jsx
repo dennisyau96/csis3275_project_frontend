@@ -1,6 +1,8 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 axios.defaults.auth = true;
 
@@ -18,6 +20,22 @@ import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [userType, setUserType] = useState("");
+  const [token, setToken] = useState(
+    sessionStorage.getItem("jwtToken")
+      ? sessionStorage.getItem("jwtToken")
+      : null
+  );
+
+  // function getUser() {
+  //   token ? setLoggedIn(true) : null;
+  // if(loggedIn){
+
+  // }
+  // }
+
   return (
     <>
       {/* <Toaster> */}
