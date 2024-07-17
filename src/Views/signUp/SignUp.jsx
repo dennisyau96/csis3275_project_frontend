@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { baseURL } from "../../../constant/constant";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 axios.defaults.baseURL = "http://localhost:8082/api";
 axios.defaults.withCredentials = false;
@@ -48,194 +49,221 @@ function SignUp() {
   //component code
   return (
     <>
-      <h1>This is sign up page.</h1>
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#signUpModal"
-        onClick={() => {
-          clearInput();
-        }}
-      >
-        Sign up
-      </button>
+      <div className="m-20 p-10 bg-white rounded-xl text-center">
+        <div>
+          <h1 className="text-4xl">
+            Sign up now and hang out with some fluffy doggy.
+          </h1>
+          <br />
+          <button
+            type="button"
+            className="btn bg-blue-500 font-bold text-xl m-2 text-white hover:bg-blue-300"
+            data-bs-toggle="modal"
+            data-bs-target="#signUpModal"
+            onClick={() => {
+              clearInput();
+            }}
+          >
+            Sign up
+          </button>
+        </div>
 
-      <div
-        className="modal fade"
-        id="signUpModal"
-        tabIndex="-1"
-        aria-labelledby="signUpModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="signUpModalLabel">
-                Sign Up
-                <br />
-                <span>All the field are mandatory.</span>
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  clearInput();
-                }}
-              ></button>
-            </div>
-            <div className="modal-body table text-right">
-              {/*username */}
-              <div className="mb-2">
-                <label htmlFor="registerUsername" className="mr-2 col-span-1">
-                  Username
-                </label>
-                <input
-                  name="registerUsername"
-                  className="border-2"
-                  type="text"
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
-                  value={username}
-                ></input>
-              </div>
-              {/*password */}
-              <div className="mb-2">
-                <label htmlFor="registerPassword" className="mr-2 col-span-1">
-                  Password
-                </label>
-                <input
-                  name="registerPassword"
-                  className="border-2"
-                  type="password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  value={password}
-                ></input>
-              </div>
-              {/*confirm password */}
-              <div className="mb-2">
-                <label
-                  htmlFor="registerConfirmPasword"
-                  className="mr-2 col-span-1"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  name="registerConfirmPasword"
-                  className="border-2"
-                  type="password"
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                  }}
-                  value={confirmPassword}
-                ></input>
-              </div>
-              {/*First name */}
-              <div className="mb-2">
-                <label htmlFor="registerFirstName" className="mr-2 col-span-1">
-                  First Name
-                </label>
-                <input
-                  name="registerFirstName"
-                  className="border-2"
-                  type="text"
-                  onChange={(e) => {
-                    setFirstName(e.target.value);
-                  }}
-                  value={firstName}
-                ></input>
-              </div>
+        <div className="mt-20">
+          {" "}
+          <h1>Already have an account? Sign in and make appointment!</h1>
+          <br />
+          <button className="btn bg-amber-300  font-bold text-xl m-2 hover:bg-amber-200">
+            <Link to="/login">Sign in Now</Link>
+          </button>
+          <div
+            className="modal fade"
+            id="signUpModal"
+            tabIndex="-1"
+            aria-labelledby="signUpModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="signUpModalLabel">
+                    Sign Up
+                    <br />
+                    <span>All the field are mandatory.</span>
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    onClick={() => {
+                      clearInput();
+                    }}
+                  ></button>
+                </div>
+                <div className="modal-body table text-right">
+                  {/*username */}
+                  <div className="mb-2">
+                    <label
+                      htmlFor="registerUsername"
+                      className="mr-2 col-span-1"
+                    >
+                      Username
+                    </label>
+                    <input
+                      name="registerUsername"
+                      className="border-2"
+                      type="text"
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                      }}
+                      value={username}
+                    ></input>
+                  </div>
+                  {/*password */}
+                  <div className="mb-2">
+                    <label
+                      htmlFor="registerPassword"
+                      className="mr-2 col-span-1"
+                    >
+                      Password
+                    </label>
+                    <input
+                      name="registerPassword"
+                      className="border-2"
+                      type="password"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                      value={password}
+                    ></input>
+                  </div>
+                  {/*confirm password */}
+                  <div className="mb-2">
+                    <label
+                      htmlFor="registerConfirmPasword"
+                      className="mr-2 col-span-1"
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                      name="registerConfirmPasword"
+                      className="border-2"
+                      type="password"
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
+                      value={confirmPassword}
+                    ></input>
+                  </div>
+                  {/*First name */}
+                  <div className="mb-2">
+                    <label
+                      htmlFor="registerFirstName"
+                      className="mr-2 col-span-1"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      name="registerFirstName"
+                      className="border-2"
+                      type="text"
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
+                      value={firstName}
+                    ></input>
+                  </div>
 
-              {/*Last name */}
-              <div className="mb-2">
-                <label htmlFor="registerLastName" className="mr-2 col-span-1">
-                  Last Name
-                </label>
-                <input
-                  name="registerLastName"
-                  className="border-2"
-                  type="text"
-                  onChange={(e) => {
-                    setLastName(e.target.value);
-                  }}
-                  value={lastName}
-                ></input>
-              </div>
-              {/*email  */}
-              <div className="mb-2">
-                <label htmlFor="registerEmail" className="mr-2 col-span-1">
-                  Email
-                </label>
-                <input
-                  name="registerEmail"
-                  className="border-2"
-                  type="text"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                ></input>
-              </div>
-              {/* phone */}
-              <div className="mb-2">
-                <label htmlFor="registerPhone" className="mr-2 col-span-1">
-                  Phone
-                </label>
-                <input
-                  name="registerPhone"
-                  className="border-2"
-                  type="text"
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                ></input>
-              </div>
-            </div>
+                  {/*Last name */}
+                  <div className="mb-2">
+                    <label
+                      htmlFor="registerLastName"
+                      className="mr-2 col-span-1"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      name="registerLastName"
+                      className="border-2"
+                      type="text"
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                      value={lastName}
+                    ></input>
+                  </div>
+                  {/*email  */}
+                  <div className="mb-2">
+                    <label htmlFor="registerEmail" className="mr-2 col-span-1">
+                      Email
+                    </label>
+                    <input
+                      name="registerEmail"
+                      className="border-2"
+                      type="text"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    ></input>
+                  </div>
+                  {/* phone */}
+                  <div className="mb-2">
+                    <label htmlFor="registerPhone" className="mr-2 col-span-1">
+                      Phone
+                    </label>
+                    <input
+                      name="registerPhone"
+                      className="border-2"
+                      type="text"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                    ></input>
+                  </div>
+                </div>
 
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-                // onClick={() => {
-                //   clearInput();
-                // }}
-              >
-                Cancel
-              </button>
+                <div className="modal-footer justify-start flex flex-wrap">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    // onClick={() => {
+                    //   clearInput();
+                    // }}
+                  >
+                    Cancel
+                  </button>
 
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => {
-                  setRole("owner");
-                  setTimeout(1000);
-                  register();
-                  clearInput();
-                }}
-                data-bs-dismiss="modal"
-              >
-                Register as Owner
-              </button>
-              <button
-                type="button"
-                className="btn bg-orange-200"
-                onClick={() => {
-                  setRole("renter");
-                  setTimeout(1000);
-                  register();
-                  clearInput();
-                }}
-                data-bs-dismiss="modal"
-              >
-                Register as Renter
-              </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setRole("owner");
+                      setTimeout(1000);
+                      register();
+                      clearInput();
+                    }}
+                    data-bs-dismiss="modal"
+                  >
+                    Register as Owner
+                  </button>
+                  <button
+                    type="button"
+                    className="btn bg-orange-200 hover:bg-orange-300"
+                    onClick={() => {
+                      setRole("renter");
+                      setTimeout(1000);
+                      register();
+                      clearInput();
+                    }}
+                    data-bs-dismiss="modal"
+                  >
+                    Register as Renter
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

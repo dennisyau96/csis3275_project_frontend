@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 
-function DogCard(props) {
+function DogCard() {
   return (
     <>
       <div className="border-2 m-4 w-60 hover:w-72 hover:transition-all rounded-md shadow-md bg-white border-black">
@@ -9,9 +9,9 @@ function DogCard(props) {
         </div>
 
         <div className="p-2">
-          <h5 className="text-lg font-bold">{props.dog.name}</h5>
+          <h5 className="text-lg font-bold">name:</h5>
           <div className="h-20">
-            {props.dog.breed}
+            breed:
             <br />
             <br />
           </div>
