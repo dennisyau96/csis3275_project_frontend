@@ -5,7 +5,7 @@ import NotificationCard from "./NotificationCard";
 
 const NotificationProfile = () => {
   return (
-    <div className="felx flex-col notificationProfile">
+    <div className="felx flex-col notificationProfile rounded-md">
       <NotificationCard />
       <NotificationCard />
       <NotificationCard />
