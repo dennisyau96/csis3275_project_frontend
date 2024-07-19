@@ -19,7 +19,7 @@ function ConfirmedBookingCard() {
         </div>
         <div className="grid grid-cols-2 space-x-3 float-right mx-2 mt-32">
           <button
-            className="  bg-red-400 p-1 w-auto h-auto text-center border-black border-2 shadow-sm flex flex-wrap text hover:bg-blue-300 "
+            className="  bg-red-400 p-1 w-auto h-10 text-center border-black border-2 shadow-sm flex flex-wrap text hover:bg-blue-300 "
             onClick={() => setOpenReview((prev) => !prev)}
           >
             Leave Review
