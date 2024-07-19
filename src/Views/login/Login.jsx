@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 axios.defaults.baseURL = "http://localhost:8082/api";
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -23,35 +23,44 @@ function Login() {
 
   async function login() {
     try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("loginData");
+      sessionStorage.removeItem("token");
+
       const data = await axios.post(baseURL + "/auth/login", {
         username: username,
         password: password,
       });
-      toast(data.data.message);
 
-      const token = data.data.data.token;
-      const tokenString = JSON.stringify(data.data.data.token);
-      setToken((prev) => token);
-
-      sessionStorage.removeItem("token");
-      sessionStorage.setItem("token", tokenString);
-
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${tokenString}`,
-      };
-      if (token)
+      if (data.data.success == true) {
+        setLoggedIn(true);
+        localStorage.setItem("loginData", JSON.stringify(data.data));
+        localStorage.setItem("token", data.data.data.token);
+        setToken(data.data.data.token);
         try {
+          // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           const userData = await axios.get(baseURL + "/users/me", {
+            withCredentials: true,
             headers: {
-              Authorization: `${token}`,
+              Authorization: `Bearer ${token}`,
             },
           });
-
-          setUserData(JSON.stringify(userData.data));
+          setUserData(userData.data);
+          localStorage.setItem("userData", JSON.stringify(userData.data));
           console.log(userData);
         } catch (err) {
           console.log(err);
         }
+      } else if (data.data.success == false) {
+        setLoggedIn(false);
+      }
+      toast(data.data.message);
+
+      // const tokenString = JSON.stringify(data.data.data.token);
+
+      // axios.defaults.headers.common = {
+      //   Authorization: `Bearer ${tokenString}`,
+      // };
     } catch (err) {
       console.log(err);
     }
