@@ -29,29 +29,29 @@ function Login() {
       });
       toast(data.data.message);
 
-      // const token = data.data.data.token;
-      // const tokenString = JSON.stringify(data.data.data.token);
-      // setToken((prev) => token);
+      const token = data.data.data.token;
+      const tokenString = JSON.stringify(data.data.data.token);
+      setToken((prev) => token);
 
-      // sessionStorage.removeItem("token");
-      // sessionStorage.setItem("token", tokenString);
+      sessionStorage.removeItem("token");
+      sessionStorage.setItem("token", tokenString);
 
-      // axios.defaults.headers.common = {
-      //   Authorization: `Bearer ${tokenString}`,
-      // };
-      // if (token)
-      //   try {
-      //     const userData = await axios.get(baseURL + "/users/me", {
-      //       headers: {
-      //         Authorization: `${token}`,
-      //       },
-      //     });
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${tokenString}`,
+      };
+      if (token)
+        try {
+          const userData = await axios.get(baseURL + "/users/me", {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
 
-      //     setUserData(JSON.stringify(userData.data));
-      //     console.log(userData);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
+          setUserData(JSON.stringify(userData.data));
+          console.log(userData);
+        } catch (err) {
+          console.log(err);
+        }
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +59,7 @@ function Login() {
 
   return (
     <>
-      <div className="m-20 p-10  bg-white rounded-xl text-center">
+      <div className="m-20 p-10  bg-white rounded-xl text-center hover:shadow-2xl shadow-neutral-950">
         <div>
           <h1 className="text-4xl">Login for the latest dog rental </h1>
           <br />
@@ -72,7 +72,7 @@ function Login() {
             Sign in
           </button>
         </div>
-        <div className="mt-20">
+        <div className="mt-20 ">
           <h1>
             Do not have an account? Sign up now and hang out with some fluffy
             doggy!
