@@ -22,6 +22,18 @@ function Login() {
   }
 
   async function login() {
+    // Assuming you have the JWT token stored in a variable
+    const jwtToken = "your_jwt_token_here";
+
+    // Create an Axios instance with the JWT token in the header
+    const axiosInstance = axios.create({
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+
+    // Now you can use the axiosInstance to make API requests
+
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("loginData");
@@ -37,13 +49,25 @@ function Login() {
         localStorage.setItem("loginData", JSON.stringify(data.data));
         localStorage.setItem("token", data.data.data.token);
         setToken(data.data.data.token);
+        console.log(JSON.stringify(data.data.data.token));
+
         try {
-          // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-          const userData = await axios.get(baseURL + "/users/me", {
-            withCredentials: true,
+          // axios.defaults.headers.common["Authorization1"] = `Bearer ${token}`;
+          const axiosInstance = axios.create({
             headers: {
-              Authorization: `Bearer ${token}`,
+              // Authorization: "Bearer " + data.data.data.token,
+              Authorization1: "Bearer " + data.data.data.token,
+              header1: "Bearer " + data.data.data.token,
             },
+          });
+
+          console.log(axiosInstance);
+
+          const userData = await axiosInstance.get(baseURL + "/users/me", {
+            //withCredentials: true,
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
           });
           setUserData(userData.data);
           localStorage.setItem("userData", JSON.stringify(userData.data));
