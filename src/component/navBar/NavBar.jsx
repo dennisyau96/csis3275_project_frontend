@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 function NavBar() {
   const [userType, setUserType] = useState("");
   const [openNotification, setOpenNotification] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const userDataJSON = JSON.parse(localStorage.getItem("userData"));
+    const userDataJSON = JSON.parse(sessionStorage.getItem("userData"));
     if (userDataJSON) {
       setUserType(userDataJSON.data.role);
+      setLoggedIn(true);
+      // window.location.reload();
     }
   }, []);
   return (
@@ -27,15 +30,15 @@ function NavBar() {
         >
           Notification
         </button>
-        <NavLink
-          className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
-          to="/booking"
-        >
-          Manage Booking
-        </NavLink>
 
-        {userType == "OWNER" ? (
-          <div>
+        {!loggedIn ? null : userType == "OWNER" ? (
+          <>
+            <NavLink
+              className="border-y-2 border-x-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
+              to="/booking"
+            >
+              Manage Booking
+            </NavLink>
             <NavLink
               className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
               to="/profile/owner"
@@ -48,16 +51,22 @@ function NavBar() {
             >
               Dog Profiles
             </NavLink>
-          </div>
+          </>
         ) : (
-          <div>
+          <>
             <NavLink
-              className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
+              className="border-y-2 border-x-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
+              to="/booking"
+            >
+              Manage Booking
+            </NavLink>
+            <NavLink
+              className="border-y-2 border-x-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
               to="/profile/renter"
             >
               Renter Profile
             </NavLink>
-          </div>
+          </>
         )}
       </nav>
       {openNotification && <NotificationProfile />}
