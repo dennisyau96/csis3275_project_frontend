@@ -14,7 +14,7 @@ function Login() {
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   function clearInput() {
     setUsername("");
@@ -22,22 +22,9 @@ function Login() {
   }
 
   async function login() {
-    // Assuming you have the JWT token stored in a variable
-    const jwtToken = "your_jwt_token_here";
-
-    // Create an Axios instance with the JWT token in the header
-    const axiosInstance = axios.create({
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    });
-
-    // Now you can use the axiosInstance to make API requests
-
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("loginData");
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("userData");
 
       const data = await axios.post(baseURL + "/auth/login", {
         username: username,
@@ -46,32 +33,34 @@ function Login() {
 
       if (data.data.success == true) {
         setLoggedIn(true);
-        localStorage.setItem("loginData", JSON.stringify(data.data));
-        localStorage.setItem("token", data.data.data.token);
-        setToken(data.data.data.token);
-        console.log(JSON.stringify(data.data.data.token));
+        // localStorage.setItem("loginData", JSON.stringify(data.data));
+        // localStorage.setItem("token", data.data.data.token);
+        setToken(JSON.stringify(data.data.data.token));
 
         try {
-          // axios.defaults.headers.common["Authorization1"] = `Bearer ${token}`;
+          //mandatory
+          axios.defaults.headers.common["Authorization1"] = `Bearer ${token}`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
           const axiosInstance = axios.create({
             headers: {
               // Authorization: "Bearer " + data.data.data.token,
               Authorization1: "Bearer " + data.data.data.token,
-              header1: "Bearer " + data.data.data.token,
             },
           });
 
-          console.log(axiosInstance);
-
           const userData = await axiosInstance.get(baseURL + "/users/me", {
-            //withCredentials: true,
-            // headers: {
-            //   Authorization: `Bearer ${token}`,
-            // },
+            withCredentials: true,
+            headers: {
+              // Authorization: "Bearer " + data.data.data.token,
+              Authorization1: "Bearer " + data.data.data.token,
+            },
           });
+
           setUserData(userData.data);
           localStorage.setItem("userData", JSON.stringify(userData.data));
-          console.log(userData);
+          navigate("/");
+          window.location.reload();
         } catch (err) {
           console.log(err);
         }
@@ -79,12 +68,6 @@ function Login() {
         setLoggedIn(false);
       }
       toast(data.data.message);
-
-      // const tokenString = JSON.stringify(data.data.data.token);
-
-      // axios.defaults.headers.common = {
-      //   Authorization: `Bearer ${tokenString}`,
-      // };
     } catch (err) {
       console.log(err);
     }
