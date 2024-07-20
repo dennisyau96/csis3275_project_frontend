@@ -12,7 +12,6 @@ export default function Home() {
     try {
       const res = await axios.get(baseURL + "/getDogs");
       const dogData = res.data.data.dogs.content;
-      setTimeout(3000);
 
       setDogs(dogData);
     } catch (err) {
@@ -21,7 +20,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setTimeout(3000);
     fetchDog();
   }, []);
 
