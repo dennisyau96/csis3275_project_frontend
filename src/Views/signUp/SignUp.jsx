@@ -49,7 +49,7 @@ function SignUp() {
   //component code
   return (
     <>
-      <div className="m-20 p-10 bg-white rounded-xl text-center">
+      <div className="m-20 p-10 bg-white rounded-xl text-center hover:shadow-2xl shadow-neutral-950">
         <div>
           <h1 className="text-4xl">
             Sign up now and hang out with some fluffy doggy.
