@@ -11,7 +11,7 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userDataJSON = JSON.parse(localStorage.getItem("userData"));
+    const userDataJSON = JSON.parse(sessionStorage.getItem("userData"));
     if (userDataJSON != null && userDataJSON.success == true) {
       if (userDataJSON != null) {
         setLoggedIn((prev) => userDataJSON.success);
@@ -26,7 +26,7 @@ function Header() {
 
   function signOut() {
     if (window.confirm("Are you sure to sign out?")) {
-      localStorage.removeItem("userData");
+      sessionStorage.removeItem("userData");
       setLoggedIn(false);
       navigate("/");
       window.location.reload();
@@ -39,7 +39,7 @@ function Header() {
         {/*---sign in sign up top bar---*/}
         <div className="block top-2 text-right p-4 inset-x-0   ">
           {loggedIn ? (
-            <div>
+            <>
               <NavLink
                 to="/login"
                 className="p-2 mr-5 border-2 hover:bg-orange-400 "
@@ -47,9 +47,9 @@ function Header() {
               >
                 Sign out
               </NavLink>
-            </div>
+            </>
           ) : (
-            <div>
+            <>
               <NavLink
                 to="/login"
                 className="p-2 mr-1 border-2 hover:bg-orange-400 "
@@ -68,7 +68,7 @@ function Header() {
               >
                 admin
               </NavLink>
-            </div>
+            </>
           )}
         </div>
 
@@ -80,7 +80,7 @@ function Header() {
               alt="dog photo"
               className="p-2 h-24 w-24"
             ></img>
-            <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer">
+            <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer hover:text-7xl hover:text-orange-700">
               <NavLink to="/">DogGo!</NavLink>
             </h1>
           </div>

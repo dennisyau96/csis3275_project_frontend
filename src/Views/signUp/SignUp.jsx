@@ -23,6 +23,9 @@ function SignUp() {
     setPassword("");
     setConfirmPassword("");
     setEmail("");
+    setFirstName("");
+    setLastName("");
+    setPhone("");
   }
 
   async function register() {
@@ -39,7 +42,10 @@ function SignUp() {
         phone: phone,
         role: role,
       });
-
+      if (data.data.success == true) {
+        clearInput();
+        navigate("/");
+      }
       toast(data.data.message);
     } catch (err) {
       console.log(err);
@@ -57,7 +63,7 @@ function SignUp() {
           <br />
           <button
             type="button"
-            className="btn bg-blue-500 font-bold text-xl m-2 text-white hover:bg-blue-300"
+            className="btn bg-orange-200 font-bold text-xl m-2 text-grey hover:bg-blue-300"
             data-bs-toggle="modal"
             data-bs-target="#signUpModal"
             onClick={() => {
@@ -72,7 +78,7 @@ function SignUp() {
           {" "}
           <h1>Already have an account? Sign in and make appointment!</h1>
           <br />
-          <button className="btn bg-amber-300  font-bold text-xl m-2 hover:bg-amber-200">
+          <button className="  font-bold text-xl m-2 hover:text-amber-800 underline">
             <Link to="/login">Sign in Now</Link>
           </button>
           <div
@@ -243,9 +249,8 @@ function SignUp() {
                       setRole("owner");
                       setTimeout(1000);
                       register();
-                      clearInput();
                     }}
-                    data-bs-dismiss="modal"
+                    // data-bs-dismiss="modal"
                   >
                     Register as Owner
                   </button>
@@ -256,9 +261,8 @@ function SignUp() {
                       setRole("renter");
                       setTimeout(1000);
                       register();
-                      clearInput();
                     }}
-                    data-bs-dismiss="modal"
+                    // data-bs-dismiss="modal"
                   >
                     Register as Renter
                   </button>
