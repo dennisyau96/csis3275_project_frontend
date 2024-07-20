@@ -58,7 +58,7 @@ function Login() {
           });
 
           setUserData(userData.data);
-          localStorage.setItem("userData", JSON.stringify(userData.data));
+          sessionStorage.setItem("userData", JSON.stringify(userData.data));
           navigate("/");
           window.location.reload();
         } catch (err) {
@@ -81,7 +81,7 @@ function Login() {
           <br />
           <button
             type="button"
-            className="btn bg-amber-300 font-bold text-xl m-2 hover:bg-amber-200"
+            className="btn bg-amber-200 font-bold text-xl m-2 hover:bg-amber-200"
             data-bs-toggle="modal"
             data-bs-target="#signInModal"
           >
@@ -94,7 +94,7 @@ function Login() {
             doggy!
           </h1>
           <br />
-          <button className="btn bg-blue-500 font-bold text-xl m-2 text-white hover:bg-blue-400">
+          <button className="  font-bold text-xl m-2 text-grey underline hover:text-blue-400">
             <Link to="/signup">Sign up Now</Link>
           </button>
         </div>
