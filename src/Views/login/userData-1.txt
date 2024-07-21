@@ -12,3 +12,7 @@
     "username": "dennis3"
   }
 }
+
+
+{"success":true,"message":"success","data":{"firstName":"d1","lastName":"d1","role":"OWNER","phone":"1112223333","profilePic":null,"profile":null,"email":"d1@email.com","username":"d1"}}
+

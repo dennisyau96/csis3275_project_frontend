@@ -26,7 +26,7 @@ function Header() {
 
   function signOut() {
     if (window.confirm("Are you sure to sign out?")) {
-      sessionStorage.removeItem("userData");
+      sessionStorage.clear();
       setLoggedIn(false);
       navigate("/");
       window.location.reload();

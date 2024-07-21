@@ -34,7 +34,7 @@ function Login() {
       if (data.data.success == true) {
         setLoggedIn(true);
         // localStorage.setItem("loginData", JSON.stringify(data.data));
-        // localStorage.setItem("token", data.data.data.token);
+        sessionStorage.setItem("token", data.data.data.token);
         setToken(JSON.stringify(data.data.data.token));
 
         try {
@@ -58,6 +58,7 @@ function Login() {
           });
 
           setUserData(userData.data);
+          console.log(userData.data);
           sessionStorage.setItem("userData", JSON.stringify(userData.data));
           navigate("/");
           window.location.reload();
@@ -81,7 +82,7 @@ function Login() {
           <br />
           <button
             type="button"
-            className="btn bg-amber-200 font-bold text-xl m-2 hover:bg-amber-200"
+            className="btn bg-amber-200 font-bold text-xl m-2 hover:bg-amber-300"
             data-bs-toggle="modal"
             data-bs-target="#signInModal"
           >

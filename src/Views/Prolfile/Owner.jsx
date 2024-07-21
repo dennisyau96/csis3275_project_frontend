@@ -1,10 +1,23 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 function Owner() {
-  const [username, setUsername] = useState("owner 1");
-  const [introduction, setIntroduction] = useState("introduction");
-  const [telephone, setTelephone] = useState("604 - 111 - 2222");
-  const [email, setEmail] = useState("123@gmail.com");
+  const [username, setUsername] = useState("");
+  const [introduction, setIntroduction] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [email, setEmail] = useState("");
+  const [userData, setUserData] = useState(
+    JSON.parse(sessionStorage.getItem("userData"))
+  );
+
+  useEffect(() => {
+    if (userData != null) {
+      setUsername(userData.data.username);
+      setIntroduction(userData.data.profile);
+      setTelephone(userData.data.phone);
+      setEmail(userData.data.email);
+    }
+  }, []);
   return (
     <>
       <h1>This is Owner page.</h1>
