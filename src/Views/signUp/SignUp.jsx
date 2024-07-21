@@ -63,7 +63,7 @@ function SignUp() {
           <br />
           <button
             type="button"
-            className="btn bg-orange-200 font-bold text-xl m-2 text-grey hover:bg-blue-300"
+            className="btn bg-blue-100 font-bold text-xl m-2 text-grey hover:bg-blue-300"
             data-bs-toggle="modal"
             data-bs-target="#signUpModal"
             onClick={() => {

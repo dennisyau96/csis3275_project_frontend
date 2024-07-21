@@ -12,7 +12,6 @@ function NavBar() {
     if (userDataJSON) {
       setUserType(userDataJSON.data.role);
       setLoggedIn(true);
-      // window.location.reload();
     }
   }, []);
   return (
@@ -26,7 +25,13 @@ function NavBar() {
         </NavLink>
         <button
           className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
-          onClick={() => setOpenNotification((prev) => !prev)}
+          onClick={() => {
+            setOpenNotification((prev) => !prev);
+            window.addEventListener(
+              "dblclick",
+              setOpenNotification((prev) => false)
+            );
+          }}
         >
           Notification
         </button>
@@ -69,7 +74,7 @@ function NavBar() {
           </>
         )}
       </nav>
-      {openNotification && <NotificationProfile />}
+      {openNotification ? <NotificationProfile /> : null}
     </>
   );
 }

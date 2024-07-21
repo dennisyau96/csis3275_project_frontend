@@ -1,20 +1,43 @@
 import DogProfileCard from "../../component/dog/DogProfileCard";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { useState } from "react";
+import { Profiler, useEffect, useState } from "react";
+import axios from "axios";
+import { baseURL } from "../../../constant/constant";
+import toast from "react-hot-toast";
+
+axios.defaults.baseURL = "http://localhost:8082/api";
+axios.defaults.withCredentials = true;
+
 function OwnerDogList() {
   const [modal, setModal] = useState(false);
   // value hook
 
-  const [name, setName] = useState();
-  const [breed, setBreed] = useState();
-  const [age, setAge] = useState();
-  const [picture, setPicture] = useState();
-  const [rate, setRate] = useState();
-  const [location, setLocation] = useState();
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const token2 = sessionStorage.getItem("token");
+  axios.defaults.headers.common["Authorization1"] = `Bearer ${token2}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token2}`;
+
+  //useState hooks
+  const [name, setName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [age, setAge] = useState("");
+  const [picture, setPicture] = useState("");
+  const [rate, setRate] = useState("");
+  const [rating, setRating] = useState("");
+  const [location, setLocation] = useState("");
   const [sterized, setSterized] = useState(false);
-  const [sex, setSex] = useState();
+  const [sex, setSex] = useState("");
   const [vaccinated, setVaccinated] = useState(false);
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
+  const [owner_id, setOwnerId] = useState();
+  const [service_id, setServiceId] = useState("");
+  const [additional_message, setAddtionalMessage] = useState("");
+
+  const [myDogs, setMyDogs] = useState([]);
+
+  useEffect(() => {
+    displayDog();
+  }, []);
 
   function toggle() {
     setModal((prev) => !modal);
@@ -31,6 +54,90 @@ function OwnerDogList() {
     setSterized();
     setVaccinated();
     setDescription();
+    setOwnerId();
+    setServiceId();
+    setAddtionalMessage();
+  }
+
+  async function displayDog() {
+    try {
+      // const axiosInstance = axios.create({
+      //   headers: {
+      //     // Authorization: "Bearer " + data.data.data.token,
+      //     Authorization1: "Bearer " + token,
+      //   },
+      // });
+
+      const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
+        withCredentials: true,
+        headers: {
+          // Authorization: "Bearer " + data.data.data.token,
+          Authorization: "Bearer " + token,
+          Authorization1: "Bearer " + token,
+        },
+      });
+
+      if (ownerDog.data.success == true) {
+        toast("load self dogs ok");
+        toast(ownerDog.data.message);
+        setMyDogs(ownerDog.data.data.content);
+      } else {
+        toast("load self dogs not ok");
+        toast(ownerDog.data.message);
+        setMyDogs([]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function addDog() {
+    try {
+      const axiosInstance = axios.create({
+        headers: {
+          // Authorization: "Bearer " + data.data.data.token,
+          Authorization1: "Bearer " + token,
+        },
+      });
+
+      const newDog = await axios.post(
+        baseURL + "/addDog",
+        {
+          // owner_id: owner_id,
+          service_id: service_id,
+          name: name,
+          breed: breed,
+          age: age,
+          sex: sex,
+          additional_message: additional_message,
+          profile_pic: picture,
+          rental_price_per_hour: rate,
+          location: location,
+          desexed: sterized,
+          vaccinated: vaccinated,
+          average_rating: rating,
+          profile_description: description,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            // Authorization: "Bearer " + data.data.data.token,
+            Authorization1: "Bearer " + token,
+          },
+        }
+      );
+
+      if (newDog.data.success == true) {
+        toast("adding new dog ok");
+        toast(newDog.data.message);
+        window.location.reload();
+      } else {
+        toast("add new dog not ok");
+        toast(newDog.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -38,6 +145,7 @@ function OwnerDogList() {
       <div className=" items-center">
         <h1 className="mr-9">Dog Profiles</h1>
         <br />
+        {/* <DogProfileCard /> */}
         {/* <button className="border-2 border-black bg-gray-300 shadow-sm p-2">
           Add new dog
         </button> */}
@@ -85,7 +193,7 @@ function OwnerDogList() {
               id="breedInput"
               className="border-black border-solid border-2 rounded-lg"
               onChange={(e) => {
-                e.target.value;
+                setBreed(e.target.value);
               }}
             >
               <option defaultValue="---Breed---">---Breed---</option>
@@ -318,20 +426,36 @@ function OwnerDogList() {
             ></textarea>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={toggle}>
+            <Button
+              color="primary"
+              onClick={() => {
+                addDog();
+                setTimeout(1000);
+                toggle();
+              }}
+            >
               Save Dog
             </Button>{" "}
             <Button
               color="secondary"
               onClick={() => {
                 toggle();
-                clearInput();
+                // clearInput();
               }}
             >
               Cancel
             </Button>
           </ModalFooter>
         </Modal>
+        {myDogs ? (
+          <div>
+            {myDogs.map((dog, id) => {
+              <DogProfileCard dog={dog} id={id} key={id} />;
+            })}
+          </div>
+        ) : (
+          <div>You have no dog.</div>
+        )}
       </div>
     </>
   );

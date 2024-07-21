@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { baseURL } from "../../../constant/constant";
+import toast from "react-hot-toast";
 
-export default function DogProfileCard() {
+export default function DogProfileCard({ id }) {
   const [name, setName] = useState();
   const [gender, setGender] = useState();
   const [breed, setBreed] = useState();
@@ -11,6 +13,27 @@ export default function DogProfileCard() {
   const [price, setPrice] = useState();
   const [availability, setAvailability] = useState();
   const [remarks, setRemarks] = useState();
+  // const [token, setToken] = useState(sessionStorage.getItem("token"));
+
+  async function deleteDog(Aid) {
+    const token = sessionStorage.getItem("token");
+    try {
+      const deleteDog = await axios.delete(
+        `${baseURL}/deleteDog`,
+        { id: Aid },
+        {
+          withCredentials: true,
+          headers: {
+            // Authorization: "Bearer " + data.data.data.token,
+            Authorization1: "Bearer " + token,
+          },
+        }
+      );
+      toast(deleteDog.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <>
@@ -253,7 +276,15 @@ export default function DogProfileCard() {
           {/* row 6 */}
           <div>
             <button className="m-1 btn bg-green-200 hover:bg-green-300 font-bold">
-              Update Dog Profile
+              Update
+            </button>
+            <button
+              onClick={() => {
+                deleteDog(id);
+              }}
+              className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
+            >
+              Delete
             </button>
           </div>
         </div>
