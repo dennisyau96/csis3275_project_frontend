@@ -10,9 +10,9 @@ export default function Home() {
 
   async function fetchDog() {
     try {
-      const res = await axios.get(baseURL + "/getDogs");
+      const res = await axios.get(baseURL + `/getDogs?`);
       const dogData = res.data.data.dogs.content;
-
+      localStorage.setItem("dogData", JSON.stringify(dogData));
       setDogs(dogData);
     } catch (err) {
       console.log(err);
