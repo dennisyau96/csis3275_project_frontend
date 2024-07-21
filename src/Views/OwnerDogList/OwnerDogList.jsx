@@ -13,8 +13,9 @@ function OwnerDogList() {
   // value hook
 
   const [token, setToken] = useState(sessionStorage.getItem("token"));
-  axios.defaults.headers.common["Authorization1"] = `Bearer ${token}`;
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  const token2 = sessionStorage.getItem("token");
+  axios.defaults.headers.common["Authorization1"] = `Bearer ${token2}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token2}`;
 
   //useState hooks
   const [name, setName] = useState("");
@@ -60,25 +61,26 @@ function OwnerDogList() {
 
   async function displayDog() {
     try {
-      const axiosInstance = axios.create({
-        headers: {
-          // Authorization: "Bearer " + data.data.data.token,
-          Authorization1: "Bearer " + token,
-        },
-      });
+      // const axiosInstance = axios.create({
+      //   headers: {
+      //     // Authorization: "Bearer " + data.data.data.token,
+      //     Authorization1: "Bearer " + token,
+      //   },
+      // });
 
       const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
         withCredentials: true,
         headers: {
           // Authorization: "Bearer " + data.data.data.token,
+          Authorization: "Bearer " + token,
           Authorization1: "Bearer " + token,
         },
       });
 
       if (ownerDog.data.success == true) {
         toast("load self dogs ok");
-        toast(ownerDog.data.data.message);
-        setMyDogs(ownerDog.data.data);
+        toast(ownerDog.data.message);
+        setMyDogs(ownerDog.data.data.content);
       } else {
         toast("load self dogs not ok");
         toast(ownerDog.data.message);
@@ -143,6 +145,7 @@ function OwnerDogList() {
       <div className=" items-center">
         <h1 className="mr-9">Dog Profiles</h1>
         <br />
+        {/* <DogProfileCard /> */}
         {/* <button className="border-2 border-black bg-gray-300 shadow-sm p-2">
           Add new dog
         </button> */}
@@ -444,12 +447,10 @@ function OwnerDogList() {
             </Button>
           </ModalFooter>
         </Modal>
-        {myDogs != [] || myDogs != null ? (
+        {myDogs ? (
           <div>
             {myDogs.map((dog, id) => {
-              <div key={id}>
-                <DogProfileCard dog={dog} id={id} />
-              </div>;
+              <DogProfileCard dog={dog} id={id} key={id} />;
             })}
           </div>
         ) : (

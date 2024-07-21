@@ -30,6 +30,8 @@ function Header() {
       setLoggedIn(false);
       navigate("/");
       window.location.reload();
+    } else {
+      navigate(0);
     }
   }
 
