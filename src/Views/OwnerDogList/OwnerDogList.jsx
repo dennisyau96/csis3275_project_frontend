@@ -4,12 +4,17 @@ import { Profiler, useEffect, useState } from "react";
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
 import toast from "react-hot-toast";
+import DogCard from "../../component/dog/DogCard";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = "http://localhost:8082/api";
 axios.defaults.withCredentials = true;
 
 function OwnerDogList() {
   const [modal, setModal] = useState(false);
+  const [myDogs, setMyDogs] = useState();
+  const navigate = useNavigate();
+
   // value hook
 
   const [token, setToken] = useState(sessionStorage.getItem("token"));
@@ -32,8 +37,6 @@ function OwnerDogList() {
   const [owner_id, setOwnerId] = useState();
   const [service_id, setServiceId] = useState("");
   const [additional_message, setAddtionalMessage] = useState("");
-
-  const [myDogs, setMyDogs] = useState([]);
 
   useEffect(() => {
     displayDog();
@@ -72,19 +75,24 @@ function OwnerDogList() {
         withCredentials: true,
         headers: {
           // Authorization: "Bearer " + data.data.data.token,
-          Authorization: "Bearer " + token,
-          Authorization1: "Bearer " + token,
+          Authorization: "Bearer " + token2,
+          Authorization1: "Bearer " + token2,
         },
       });
 
       if (ownerDog.data.success == true) {
         toast("load self dogs ok");
         toast(ownerDog.data.message);
-        setMyDogs(ownerDog.data.data.content);
+        setMyDogs((prev) => ownerDog.data.data.dogs.content);
+        localStorage.setItem(
+          "myDogs",
+          JSON.stringify(ownerDog.data.data.dogs.content)
+        );
       } else {
         toast("load self dogs not ok");
         toast(ownerDog.data.message);
         setMyDogs([]);
+        navigate("/login");
       }
     } catch (err) {
       console.log(err);
@@ -447,11 +455,14 @@ function OwnerDogList() {
             </Button>
           </ModalFooter>
         </Modal>
-        {myDogs ? (
+
+        {myDogs != null ? (
           <div>
-            {myDogs.map((dog, id) => {
-              <DogProfileCard dog={dog} id={id} key={id} />;
-            })}
+            {myDogs.map((dog, id) => (
+              <div key={id}>
+                <DogProfileCard dog={dog} />
+              </div>
+            ))}
           </div>
         ) : (
           <div>You have no dog.</div>
