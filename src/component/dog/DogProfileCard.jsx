@@ -2,8 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-export default function DogProfileCard({ dog }) {
+export default function DogProfileCard({ dog, uid }) {
   const [did, setDId] = useState(dog._id);
   const [name, setName] = useState(dog.name);
   const [gender, setGender] = useState(dog.sex);
@@ -18,6 +19,8 @@ export default function DogProfileCard({ dog }) {
   const [availability, setAvailability] = useState([]);
   const [remark, setRemark] = useState(dog.profile_description);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [userIdUS, setuserIdUS] = useState({ uid });
+  const navigate = useNavigate();
 
   async function deleteDog(did) {
     const token2 = sessionStorage.getItem("token");
@@ -33,10 +36,11 @@ export default function DogProfileCard({ dog }) {
           },
         }
       );
-      toast(updateDog.data.message);
+      toast("deleted");
       window.location.reload();
     } catch (err) {
       console.log(err);
+      window.location.reload();
     }
   }
 
@@ -59,6 +63,7 @@ export default function DogProfileCard({ dog }) {
           vaccinated: vaccinated,
           profile_description: remark,
           average_rating: null,
+          owner_id: userIdUS,
         },
         {
           withCredentials: true,
@@ -68,10 +73,13 @@ export default function DogProfileCard({ dog }) {
           },
         }
       );
-      toast(updateDog.data.success);
+      if (updateDog.data.success) {
+        toast("successfully updated");
+      }
       window.location.reload();
     } catch (err) {
       console.log(err);
+      window.location.reload();
     }
   }
 
@@ -319,31 +327,24 @@ export default function DogProfileCard({ dog }) {
             <input
               className="m-1"
               type="checkbox"
-              // checked={sterilized && true}
               id="sterilizedInput"
-              value={sterilized}
-              onClick={() => {
+              // value={sterilized}
+              checked={sterilized && true}
+              onChange={() => {
                 setSterilized((prev) => !prev);
-              }}
-              onChange={(e) => {
-                setSterilized(e.target.value);
               }}
             />
 
-            <label htmlFor="sterilizedInput" className="m-1">
+            <label htmlFor="vaccinatedInput" className="m-1">
               Vaccinated:
             </label>
             <input
               className="m-1"
               type="checkbox"
-              // checked={vaccinated && true}
-              id="sterilizedInput"
-              value={vaccinated}
-              onClick={() => {
+              id="vaccinatedInput"
+              checked={vaccinated && true}
+              onChange={() => {
                 setVaccinated((prev) => !prev);
-              }}
-              onChange={(e) => {
-                setVaccinated(e.target.value);
               }}
             />
           </div>
