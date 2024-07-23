@@ -6,8 +6,8 @@ import { baseURL } from "../../../constant/constant";
 import { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import toast from "react-hot-toast";
+import axios, { all } from "axios";
 
-import axios from "axios";
 export default function Booking() {
   //for initial loading
   const [userType, setUserType] = useState("");
@@ -15,6 +15,12 @@ export default function Booking() {
   const [modal, setModal] = useState(false);
   const [myDogs, setMyDogs] = useState([]);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [allTimeSlot, setAllTimeSlot] = useState([]);
+  const [allBooking, setAllBooking] = useState([]);
+  const [userId, setUserId] = useState();
+  const [dogIds, setDogIds] = useState([]);
+  const dogIdArray = [];
+
   const token2 = sessionStorage.getItem("token");
 
   // for adding dog
@@ -27,18 +33,22 @@ export default function Booking() {
   const [dogId, setDogId] = useState();
 
   useEffect(() => {
-    displayDog();
     const userDataJSON = JSON.parse(sessionStorage.getItem("userData"));
     if (userDataJSON) {
       setUserType(userDataJSON.data.role);
     } else {
       setUserType(userDataJSON.data.role);
     }
+    displayDog();
+    setUserId((prev) => sessionStorage.getItem("userID"));
+    getAllTimeSlot();
+    getAllBooking();
   }, []);
 
   function toggle() {
     setModal((prev) => !modal);
   }
+
   async function displayDog() {
     try {
       const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
@@ -50,16 +60,17 @@ export default function Booking() {
       });
 
       if (ownerDog.data.success == true) {
-        toast(ownerDog.data.message);
+        toast("displayed dog ");
         setMyDogs((prev) => ownerDog.data.data.dogs.content);
         localStorage.setItem(
           "myDogs",
           JSON.stringify(ownerDog.data.data.dogs.content)
         );
 
+        getAllTimeSlot();
         // window.location.reload();
       } else {
-        toast(ownerDog.data.message);
+        toast("failed to display dog");
         setMyDogs([]);
         // navigate("/login");
       }
@@ -69,18 +80,36 @@ export default function Booking() {
   }
 
   async function addTimeSlot() {
-    setDogId();
-    const addTimeSlot = await axios.post(baseURL + "/addTimeslot", {
-      dog_id: dogId,
-      timeslots: [
+    try {
+      const addTimeSlot = await axios.post(
+        baseURL + "/addTimeslot",
         {
-          date: date,
-          start_time: startTime,
-          end_time: endTime,
-          pickUp: pickUp,
+          dog_id: dogId,
+          timeslots: [
+            {
+              date: date,
+              start_time: startTime,
+              end_time: endTime,
+              pickUp: pickUp,
+            },
+          ],
         },
-      ],
-    });
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+
+      getAllTimeSlot();
+      toast("add timeslot successful.");
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+      toast("fail to add timeslot");
+    }
   }
 
   function clear() {
@@ -92,6 +121,57 @@ export default function Booking() {
     setPickUp();
     setStartTime();
   }
+
+  async function getAllTimeSlot() {
+    try {
+      const dogs = JSON.parse(localStorage.getItem("myDogs"));
+      dogs.forEach((dog) => {
+        dogIdArray.push(dog.id);
+      });
+
+      const allTimeSlotA = await axios.get(
+        "http://localhost:8082/api/getTimeslot/" + dog.id,
+
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+      localStorage.setItem("alltimeslot", JSON.stringify(allTimeSlotA.data));
+      setAllTimeSlot((prev) => allTimeSlotA.data.data.timeslots);
+
+      setDogIds((prev) => dogIdArray);
+      const userId = sessionStorage.getItem("userID");
+
+      toast(allTimeSlotA.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getAllBooking() {
+    try {
+      const allBooking = await axios.get(
+        "http://localhost:8082/api/getBookings/" + userId,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+      setAllBooking(allBooking);
+      localStorage.setItem("allBooking", JSON.stringify(allBooking.data));
+      toast("load all booking successful");
+    } catch (err) {
+      console.log(err);
+      toast("fail to load all booking");
+    }
+  }
   return (
     <>
       <div className="m-2">
@@ -99,7 +179,7 @@ export default function Booking() {
           onClick={() => setModal((prev) => !prev)}
           className="bg-white border-black border-2 p-2 rounded-md hover:bg-gray-300 active:bg-gray-400"
         >
-          Add Booking
+          Add Timeslot
         </button>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Add a timeslot</ModalHeader>
@@ -135,6 +215,7 @@ export default function Booking() {
             <label>End Time:</label>
             <input
               className="border-black border-1 rounded-sm"
+              type="time"
               onChange={(e) => {
                 setEndTime(e.target.value);
               }}
@@ -149,7 +230,15 @@ export default function Booking() {
             ></input>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={() => addTimeSlot()}>Add Timeslot</Button>{" "}
+            <Button
+              onClick={() => {
+                addTimeSlot();
+                clear();
+                toggle();
+              }}
+            >
+              Add Timeslot
+            </Button>{" "}
             <Button
               onClick={() => {
                 clear();
@@ -163,15 +252,18 @@ export default function Booking() {
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div className="w-full h-auto bg-red-100 m-2 p-2 rounded-md">
-          <h2>Vacant Booking</h2>
-          {myDogs.map((dog, id) => {
-            <VacantBooking dog={dog} />;
-          })}
+          <h2>Vacant Timeslot</h2>
+          <VacantBooking />
+          {allTimeSlot &&
+            allTimeSlot.map((timeslot, id) => {
+              <div key={id}>
+                <VacantBooking timeslot={timeslot} />
+              </div>;
+            })}
         </div>
 
         <div className="w-full block bg-blue-100 m-2 p-2 rounded-md">
           <h2>Booking Request</h2>
-
           <BookingRequestCard />
           <BookingRequestCard />
           <BookingRequestCard />
@@ -180,6 +272,7 @@ export default function Booking() {
         <div className="w-full h-auto  bg-yellow-100 m-2 p-2 rounded-md">
           <h2>Confirmed Booking</h2>
 
+          {}
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />

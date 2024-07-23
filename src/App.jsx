@@ -62,7 +62,7 @@ export default function App() {
           </Route>
         </Routes>
       </section>
-      <Toaster position="left-center" />
+      <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
     </>
   );
 }

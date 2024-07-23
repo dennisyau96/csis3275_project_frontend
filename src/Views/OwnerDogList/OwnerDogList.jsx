@@ -66,33 +66,23 @@ function OwnerDogList() {
 
   async function displayDog() {
     try {
-      // const axiosInstance = axios.create({
-      //   headers: {
-      //     // Authorization: "Bearer " + data.data.data.token,
-      //     Authorization1: "Bearer " + token,
-      //   },
-      // });
-
       const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
         withCredentials: true,
         headers: {
-          // Authorization: "Bearer " + data.data.data.token,
           Authorization: "Bearer " + token2,
           Authorization1: "Bearer " + token2,
         },
       });
 
       if (ownerDog.data.success == true) {
-        toast(ownerDog.data.message);
+        toast.success(ownerDog.data.message);
         setMyDogs((prev) => ownerDog.data.data.dogs.content);
         localStorage.setItem(
           "myDogs",
           JSON.stringify(ownerDog.data.data.dogs.content)
         );
-
-        // window.location.reload();
       } else {
-        toast(ownerDog.data.message);
+        toast.error(ownerDog.data.message);
         setMyDogs([]);
         navigate("/login");
       }
@@ -103,13 +93,6 @@ function OwnerDogList() {
 
   async function addDog() {
     try {
-      // const axiosInstance = axios.create({
-      //   headers: {
-      //     // Authorization: "Bearer " + data.data.data.token,
-      //     Authorization1: "Bearer " + token,
-      //   },
-      // });
-
       const newDog = await axios.post(
         baseURL + "/addDog",
         {
@@ -139,11 +122,9 @@ function OwnerDogList() {
       );
 
       if (newDog.data.success == true) {
-        // toast("adding new dog ok");
-        toast(newDog.data.message);
         window.location.reload();
       } else {
-        toast(newDog.data.message);
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);

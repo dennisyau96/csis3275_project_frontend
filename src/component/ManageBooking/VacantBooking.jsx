@@ -2,7 +2,7 @@ import { useState } from "react";
 import { json } from "react-router-dom";
 // import LeaveReviewCard from "../Review/LeaveReviewCard";
 
-function VacantBooking({ dog }) {
+function VacantBooking({ timeslot }) {
   const [openReview, setOpenReview] = useState(false);
   const [myDogs, setMyDogs] = useState(
     JSON.parse(localStorage.getItem("myDogs"))
