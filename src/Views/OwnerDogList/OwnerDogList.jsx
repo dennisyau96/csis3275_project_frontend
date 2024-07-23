@@ -464,7 +464,7 @@ function OwnerDogList() {
 
         <div>
           {myDogs == [] || myDogs == null ? (
-            <div>My Dogs</div>
+            <div>No Dogs</div>
           ) : (
             <div className="flex flex-wrap">
               {myDogs.map((dog) => (
