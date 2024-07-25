@@ -1,4 +1,5 @@
 // import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function DogCard({ dog }) {
   return (
@@ -20,7 +21,9 @@ function DogCard({ dog }) {
               Details
             </button>
             <button className=" inline bg-orange-400 p-1 w-20 text-center  border-black border-2 shadow-sm  hover:bg-red-200">
+              <NavLink to="bookingApplication">
               Apply
+              </NavLink>
             </button>
           </div>
         </div>

@@ -229,7 +229,7 @@ export default function DogProfileCard() {
               Price
             </label>
             <input type="number" className="m-1">
-              {}
+              {} 
             </input>
             /hour
           </div>
