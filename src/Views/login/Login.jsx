@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 axios.defaults.baseURL = "http://localhost:8082/api";
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,7 +14,7 @@ function Login() {
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   function clearInput() {
     setUsername("");
@@ -23,35 +23,52 @@ function Login() {
 
   async function login() {
     try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userData");
+
       const data = await axios.post(baseURL + "/auth/login", {
         username: username,
         password: password,
       });
+
+      if (data.data.success == true) {
+        setLoggedIn(true);
+        // localStorage.setItem("loginData", JSON.stringify(data.data));
+        sessionStorage.setItem("token", data.data.data.token);
+        setToken(JSON.stringify(data.data.data.token));
+
+        try {
+          //mandatory
+          axios.defaults.headers.common["Authorization1"] = `Bearer ${token}`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+          const axiosInstance = axios.create({
+            headers: {
+              // Authorization: "Bearer " + data.data.data.token,
+              Authorization1: "Bearer " + data.data.data.token,
+            },
+          });
+
+          const userData = await axiosInstance.get(baseURL + "/users/me", {
+            withCredentials: true,
+            headers: {
+              // Authorization: "Bearer " + data.data.data.token,
+              Authorization1: "Bearer " + data.data.data.token,
+            },
+          });
+
+          setUserData(userData.data);
+          console.log(userData.data);
+          sessionStorage.setItem("userData", JSON.stringify(userData.data));
+          navigate("/");
+          window.location.reload();
+        } catch (err) {
+          console.log(err);
+        }
+      } else if (data.data.success == false) {
+        setLoggedIn(false);
+      }
       toast(data.data.message);
-
-      // const token = data.data.data.token;
-      // const tokenString = JSON.stringify(data.data.data.token);
-      // setToken((prev) => token);
-
-      // sessionStorage.removeItem("token");
-      // sessionStorage.setItem("token", tokenString);
-
-      // axios.defaults.headers.common = {
-      //   Authorization: `Bearer ${tokenString}`,
-      // };
-      // if (token)
-      //   try {
-      //     const userData = await axios.get(baseURL + "/users/me", {
-      //       headers: {
-      //         Authorization: `${token}`,
-      //       },
-      //     });
-
-      //     setUserData(JSON.stringify(userData.data));
-      //     console.log(userData);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
     } catch (err) {
       console.log(err);
     }
@@ -59,26 +76,26 @@ function Login() {
 
   return (
     <>
-      <div className="m-20 p-10  bg-white rounded-xl text-center">
+      <div className="m-20 p-10  bg-white rounded-xl text-center hover:shadow-2xl shadow-neutral-950">
         <div>
           <h1 className="text-4xl">Login for the latest dog rental </h1>
           <br />
           <button
             type="button"
-            className="btn bg-amber-300 font-bold text-xl m-2 hover:bg-amber-200"
+            className="btn bg-amber-200 font-bold text-xl m-2 hover:bg-amber-300"
             data-bs-toggle="modal"
             data-bs-target="#signInModal"
           >
             Sign in
           </button>
         </div>
-        <div className="mt-20">
+        <div className="mt-20 ">
           <h1>
             Do not have an account? Sign up now and hang out with some fluffy
             doggy!
           </h1>
           <br />
-          <button className="btn bg-blue-500 font-bold text-xl m-2 text-white hover:bg-blue-400">
+          <button className="  font-bold text-xl m-2 text-grey underline hover:text-blue-400">
             <Link to="/signup">Sign up Now</Link>
           </button>
         </div>

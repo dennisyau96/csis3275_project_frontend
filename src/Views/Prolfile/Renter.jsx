@@ -1,14 +1,26 @@
 import { useState } from "react";
+import { useEffect } from "react";
 function Renter() {
-  const [username, setUsername] = useState("renter 1");
-  const [introduction, setIntroduction] = useState("introduction");
-  const [telephone, setTelephone] = useState("604 - 111 - 2222");
-  const [email, setEmail] = useState("123@gmail.com");
+  const [username, setUsername] = useState("");
+  const [introduction, setIntroduction] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [email, setEmail] = useState("");
+  const [userData, setUserData] = useState(
+    JSON.parse(sessionStorage.getItem("userData"))
+  );
 
+  useEffect(() => {
+    if (userData != null) {
+      setUsername(userData.data.username);
+      setIntroduction(userData.data.profile);
+      setTelephone(userData.data.phone);
+      setEmail(userData.data.email);
+    }
+  }, []);
   return (
     <>
       <h1>This is renter page.</h1>
-      <div className="grid grid-cols-1 m-3 ">
+      <div className="grid grid-cols-1 m-10 ">
         <div className="row mb-4">
           <label>User Name</label>
           <input type="text" value={username} disabled={true} />

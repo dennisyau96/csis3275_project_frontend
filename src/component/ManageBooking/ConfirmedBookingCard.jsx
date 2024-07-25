@@ -22,7 +22,7 @@ function ConfirmedBookingCard() {
             className="  bg-red-400 p-1 w-auto h-10 text-center border-black border-2 shadow-sm flex flex-wrap text hover:bg-blue-300 "
             onClick={() => setOpenReview((prev) => !prev)}
           >
-            Leave Review
+            Comment
           </button>
           <button className="  bg-orange-400 p-1 w-20 h-10 text-center border-black border-2 shadow-sm  hover:bg-red-200">
             Chat

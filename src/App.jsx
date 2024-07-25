@@ -2,9 +2,11 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 import { Toaster } from "react-hot-toast";
-axios.defaults.auth = true;
+// axios.defaults.auth = true;
+
+// export const userContext = createContext();
 
 //import
 import Login from "./Views/login/Login";
@@ -20,26 +22,26 @@ import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
 import BookingApplication from "./Views/Booking/BookingApplication";
 
-function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
-  const [userType, setUserType] = useState("");
-  const [token, setToken] = useState(
-    sessionStorage.getItem("jwtToken")
-      ? sessionStorage.getItem("jwtToken")
-      : null
-  );
+export default function App() {
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [username, setUsername] = useState("");
+  // const [userType, setUserType] = useState("");
 
-  // function getUser() {
-  //   token ? setLoggedIn(true) : null;
-  // if(loggedIn){
-
-  // }
-  // }
+  // useEffect(() => {
+  //   const userDataJSON = JSON.parse(localStorage.getItem("userData"));
+  //   if (userDataJSON.success) {
+  //     setLoggedIn((prev) => true);
+  //     setUsername((prev) => JSON.stringify(userDataJSON.data.data.username));
+  //     setUserType((prev) => setUserType(userDataJSON.data.data.role));
+  //   } else {
+  //     setLoggedIn((prev) => false);
+  //     setUsername((prev) => "");
+  //     setUserType((prev) => "");
+  //   }
+  // }, []);
 
   return (
     <>
-      {/* <Toaster> */}
       <Header />
       <section className="m-2">
         <Routes>
@@ -62,9 +64,7 @@ function App() {
           </Route>
         </Routes>
       </section>
-      <Toaster position="bottom" />
+      <Toaster position="left-center" />
     </>
   );
 }
-
-export default App;

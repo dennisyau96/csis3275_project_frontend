@@ -1,16 +1,79 @@
 import { useState } from "react";
 import axios from "axios";
+import { baseURL } from "../../../constant/constant";
+import toast from "react-hot-toast";
 
-export default function DogProfileCard() {
-  const [name, setName] = useState();
-  const [gender, setGender] = useState();
-  const [breed, setBreed] = useState();
-  const [birthday, setBirthday] = useState();
-  const [age, setAge] = useState();
-  const [sterilized, setSterilized] = useState();
-  const [price, setPrice] = useState();
-  const [availability, setAvailability] = useState();
-  const [remarks, setRemarks] = useState();
+export default function DogProfileCard({ dog }) {
+  const [did, setDId] = useState(dog._id);
+  const [name, setName] = useState(dog.name);
+  const [gender, setGender] = useState(dog.sex);
+  const [breed, setBreed] = useState(dog.breed);
+  const [birthday, setBirthday] = useState("");
+  const [age, setAge] = useState(dog.age);
+  const [picture, setProfilePic] = useState(dog.profile_pic);
+  const [location, setLocation] = useState(dog.location);
+  const [sterilized, setSterilized] = useState(dog.dessexed);
+  const [vaccinated, setVaccinated] = useState(dog.vaccinated);
+  const [price, setPrice] = useState(dog.rental_price_per_hour);
+  const [availability, setAvailability] = useState([]);
+  const [remark, setRemark] = useState(dog.profile_description);
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+
+  async function deleteDog(did) {
+    const token2 = sessionStorage.getItem("token");
+    try {
+      const deleteDog = await axios.post(
+        `${baseURL}/deleteDog`,
+        { _id: did },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+      toast(updateDog.data.message);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function updateDog(did) {
+    const token2 = sessionStorage.getItem("token");
+    try {
+      const updateDog = await axios.post(
+        `${baseURL}/updateDog`,
+        {
+          _id: did,
+          name: name,
+          breed: breed,
+          age: age,
+          sex: gender,
+          additional_message: "",
+          profile_pic: picture,
+          rental_price_per_hour: price,
+          location: location,
+          desexed: sterilized,
+          vaccinated: vaccinated,
+          profile_description: remark,
+          average_rating: null,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+      toast(updateDog.data.success);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <>
@@ -26,11 +89,38 @@ export default function DogProfileCard() {
           {/* row 1 */}
           <div>
             <label htmlFor="nameInput" className="m-1">
-              Name
+              Name:
             </label>
-            <input type="text" className="m-1" value={name} id="nameInput" />
-            <label htmlFor="breedInput" className="m-1"></label>
-            <select value={breed} id="breedInput" className="m-1">
+            <input
+              type="text"
+              className="m-1"
+              value={name}
+              id="nameInput"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <label htmlFor="idInput" className="m-1">
+              id:
+            </label>
+            <input
+              type="text"
+              className="m-1"
+              value={did}
+              id="idInput"
+              readOnly
+            />
+            <label htmlFor="breedInput" className="m-1">
+              Breed:
+            </label>
+            <select
+              value={breed}
+              id="breedInput"
+              className="m-1"
+              onChange={(e) => {
+                setBreed(e.target.value);
+              }}
+            >
               <option defaultValue="---Breed---">---Breed---</option>
               <option value="affenpinscher">affenpinscher</option>
               <option value="african">african</option>
@@ -203,57 +293,110 @@ export default function DogProfileCard() {
           {/* row 2*/}
           <div>
             <label htmlFor="genderInput" className="m-1">
-              Gender
+              Gender:
             </label>
-            <select id="genderInput" className="m-1">
+            <select
+              value={gender}
+              id="genderInput"
+              className="m-1"
+              onChange={(e) => setGender(e.target.value)}
+            >
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            <label htmlFor="birthdayInput" className="m-1">
+            {/* <label htmlFor="birthdayInput" className="m-1">
               BOD
             </label>
             <input
               type="date"
               className="border-black m-1
             border-1"
-            ></input>
-            <span className="m-1">Age {}</span>
+            ></input> */}
+            <span className="m-1">Age: {age ? age : "-"}</span>
             <label htmlFor="sterilizedInput" className="m-1">
-              sterilized
+              Sterilized:
             </label>
-            <input className="m-1" type="checkbox" id="sterilizedInput" />
+            <input
+              className="m-1"
+              type="checkbox"
+              // checked={sterilized && true}
+              id="sterilizedInput"
+              value={sterilized}
+              onClick={() => {
+                setSterilized((prev) => !prev);
+              }}
+              onChange={(e) => {
+                setSterilized(e.target.value);
+              }}
+            />
+
+            <label htmlFor="sterilizedInput" className="m-1">
+              Vaccinated:
+            </label>
+            <input
+              className="m-1"
+              type="checkbox"
+              // checked={vaccinated && true}
+              id="sterilizedInput"
+              value={vaccinated}
+              onClick={() => {
+                setVaccinated((prev) => !prev);
+              }}
+              onChange={(e) => {
+                setVaccinated(e.target.value);
+              }}
+            />
           </div>
           {/* row 3 */}
           <div>
             <label htmlFor="priceInput" className="m-1">
-              Price
+              Price(per hour):
             </label>
-            <input type="number" className="m-1">
-              {} 
-            </input>
-            /hour
+            <input
+              type="number"
+              className="m-1"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            />
           </div>
           {/* row 4 */}
           <div>
             <label htmlFor="availabilityInput" className="m-1">
-              Availability
+              Availability:
             </label>
             <select id="availabilityInput" className="m-1">
-              <option></option>
+              <option>--No availability--</option>
+              {availability.map((timeslot, id) => {
+                <option value={timeslot} key={id}></option>;
+              })}
             </select>
           </div>
           {/* row 5 */}
           <div className="grid grid-row-2 m-1">
-            <label htmlFor="">Special Needs/Message to renters</label>
+            <label htmlFor="">Description:</label>
             <textarea
-              value={remarks}
+              value={remark}
               className="border-black border-2 m-1"
+              onChange={(e) => {
+                setRemark(e.target.value);
+              }}
             ></textarea>
           </div>
           {/* row 6 */}
           <div>
-            <button className="m-1 btn bg-green-200 hover:bg-green-300 font-bold">
-              Update Dog Profile
+            <button
+              onClick={() => updateDog(did)}
+              className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
+            >
+              Update
+            </button>
+            <button
+              onClick={() => deleteDog(did)}
+              className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
+            >
+              Delete
             </button>
           </div>
         </div>
