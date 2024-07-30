@@ -122,8 +122,11 @@ function OwnerDogList() {
       );
 
       if (newDog.data.success == true) {
+        toast(newDog.data.message);
         window.location.reload();
       } else {
+        toast(newDog.data.message);
+
         window.location.reload();
       }
     } catch (err) {
@@ -434,14 +437,6 @@ function OwnerDogList() {
             </Button>
           </ModalFooter>
         </Modal>
-
-        {/* <div>
-          {myDogs.map((dog, id) => {
-            <div key={id}>
-              <DogProfileCard dog={dog} uid={owner_id} />;
-            </div>;
-          })}
-        </div> */}
 
         <div>
           {myDogs == [] || myDogs == null ? (

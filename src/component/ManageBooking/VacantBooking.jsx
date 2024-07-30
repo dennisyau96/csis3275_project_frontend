@@ -10,18 +10,15 @@ function VacantBooking({ timeslot }) {
   return (
     <>
       <div className=" grid w-10/12 h-auto m-4 p-2 bg-white rounded-md border-2 border-white shadow-xl hover:border-black hover:border-4 ">
-        <div className="h-40 w-40 p-1">
-          <img src="" alt="Dog Photo" className="w-full h-full" />
-        </div>
         <div className="p-2 w-full grid grid-cols-6 text-right gap-1">
           <div className="col-span-3">Dog:</div>
           {/* <input className="col-span-3 border-2 rounded" type="text"></input> */}
           <select>
-            {myDogs.map((dog, id) => {
+            {/* {myDogs.map((dog, id) => {
               <option key={id} value={dog.id}>
                 {dog.name}
               </option>;
-            })}
+            })} */}
           </select>
 
           <div className="col-span-3">Rental Date:</div>

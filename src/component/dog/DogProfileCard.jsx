@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseURL } from "../../../constant/constant";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import VacantBooking from "../ManageBooking/VacantBooking";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { sassNull } from "sass";
 
 export default function DogProfileCard({ dog, uid }) {
   const [did, setDId] = useState(dog._id);
@@ -20,7 +23,76 @@ export default function DogProfileCard({ dog, uid }) {
   const [remark, setRemark] = useState(dog.profile_description);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [userIdUS, setuserIdUS] = useState({ uid });
+  const [allTimeSlot, setAllTimeSlot] = useState([]);
+
+  // for adding dog
+  const [date, setDate] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [pickUp, setPickUp] = useState();
+  const [duration, setDuration] = useState();
+  const [modal, setModal] = useState(false);
+
   const navigate = useNavigate();
+
+  const token2 = sessionStorage.getItem("token");
+
+  useEffect(() => {
+    getTimeslot(did);
+  }, []);
+
+  function toggle() {
+    setModal((prev) => !modal);
+  }
+
+  function clear() {
+    setDId();
+    setName();
+    setDate();
+    setDuration();
+    setEndTime();
+    setPickUp();
+    setStartTime();
+  }
+
+  async function addTimeSlot() {
+    try {
+      const addTimeSlot = await axios.post(
+        baseURL + "/addTimeslot",
+        {
+          dog_id: did,
+          timeslots: [
+            {
+              date: date,
+              start_time: startTime,
+              end_time: endTime,
+              pickUp: pickUp,
+            },
+          ],
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getTimeslot(did) {
+    try {
+      const timeslotData = await axios.get(`${baseURL}/getTimeslot/${did}`);
+      setAllTimeSlot(timeslotData.data.data.timeslots);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   async function deleteDog(did) {
     const token2 = sessionStorage.getItem("token");
@@ -85,39 +157,42 @@ export default function DogProfileCard({ dog, uid }) {
 
   return (
     <>
-      <div
-        id="dogProfileCard"
-        className="grid grid-cols-6 bg-white m-6 p-4 rounded-md"
-      >
-        <div id="leftCol" className="  grid-rows-4 col-span-2">
-          <img className="h-64 w-64 m-1" src="" alt="dog photo"></img>
-          <button className="m-1 btn btn-primary">UploadPhoto</button>
-        </div>
-        <div id="rightCol" className=" grid-rows-6 col-span-4 m-1">
-          {/* row 1 */}
-          <div>
-            <label htmlFor="nameInput" className="m-1">
-              Name:
-            </label>
-            <input
-              type="text"
-              className="m-1"
-              value={name}
-              id="nameInput"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <label htmlFor="idInput" className="m-1">
-              id:
-            </label>
-            <input
-              type="text"
-              className="m-1"
-              value={did}
-              id="idInput"
-              readOnly
-            />
+      <div className=" bg-gray-300 rounded-md p-4 m-4">
+        <div
+          id="dogProfileCard"
+          className="grid grid-cols-6 bg-white m-6 p-4 rounded-md"
+        >
+          <div id="leftCol" className="  grid-rows-4 col-span-2">
+            <img className="h-64 w-64 m-1" src="" alt="dog photo"></img>
+            <button className="m-1 btn btn-primary">UploadPhoto</button>
+          </div>
+          <div id="rightCol" className=" grid-rows-6 col-span-4 m-1">
+            {/* row 1 */}
+            <div>
+              <label htmlFor="nameInput" className="m-1">
+                Name:
+              </label>
+              <input
+                type="text"
+                className="m-1"
+                value={name}
+                id="nameInput"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <label htmlFor="idInput" className="m-1">
+                id:
+              </label>
+              <input
+                type="text"
+                className="m-1"
+                value={did}
+                id="idInput"
+                readOnly
+              />
+            </div>
+            {/* row 2*/}
             <label htmlFor="breedInput" className="m-1">
               Breed:
             </label>
@@ -297,22 +372,20 @@ export default function DogProfileCard({ dog, uid }) {
               <option value="whippet">whippet</option>
               <option value="wolfhound-irish">irish wolfhound</option>
             </select>
-          </div>
-          {/* row 2*/}
-          <div>
-            <label htmlFor="genderInput" className="m-1">
-              Gender:
-            </label>
-            <select
-              value={gender}
-              id="genderInput"
-              className="m-1"
-              onChange={(e) => setGender(e.target.value)}
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            {/* <label htmlFor="birthdayInput" className="m-1">
+            <div>
+              <label htmlFor="genderInput" className="m-1">
+                Gender:
+              </label>
+              <select
+                value={gender}
+                id="genderInput"
+                className="m-1"
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              {/* <label htmlFor="birthdayInput" className="m-1">
               BOD
             </label>
             <input
@@ -320,50 +393,50 @@ export default function DogProfileCard({ dog, uid }) {
               className="border-black m-1
             border-1"
             ></input> */}
-            <span className="m-1">Age: {age ? age : "-"}</span>
-            <label htmlFor="sterilizedInput" className="m-1">
-              Sterilized:
-            </label>
-            <input
-              className="m-1"
-              type="checkbox"
-              id="sterilizedInput"
-              // value={sterilized}
-              checked={sterilized && true}
-              onChange={() => {
-                setSterilized((prev) => !prev);
-              }}
-            />
+              <span className="m-1">Age: {age ? age : "-"}</span>
+              <label htmlFor="sterilizedInput" className="m-1">
+                Sterilized:
+              </label>
+              <input
+                className="m-1"
+                type="checkbox"
+                id="sterilizedInput"
+                // value={sterilized}
+                checked={sterilized && true}
+                onChange={() => {
+                  setSterilized((prev) => !prev);
+                }}
+              />
 
-            <label htmlFor="vaccinatedInput" className="m-1">
-              Vaccinated:
-            </label>
-            <input
-              className="m-1"
-              type="checkbox"
-              id="vaccinatedInput"
-              checked={vaccinated && true}
-              onChange={() => {
-                setVaccinated((prev) => !prev);
-              }}
-            />
-          </div>
-          {/* row 3 */}
-          <div>
-            <label htmlFor="priceInput" className="m-1">
-              Price(per hour):
-            </label>
-            <input
-              type="number"
-              className="m-1"
-              value={price}
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
-            />
-          </div>
-          {/* row 4 */}
-          <div>
+              <label htmlFor="vaccinatedInput" className="m-1">
+                Vaccinated:
+              </label>
+              <input
+                className="m-1"
+                type="checkbox"
+                id="vaccinatedInput"
+                checked={vaccinated && true}
+                onChange={() => {
+                  setVaccinated((prev) => !prev);
+                }}
+              />
+            </div>
+            {/* row 3 */}
+            <div>
+              <label htmlFor="priceInput" className="m-1">
+                Price(per hour):
+              </label>
+              <input
+                type="number"
+                className="m-1"
+                value={price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              />
+            </div>
+            {/* row 4 */}
+            {/* <div>
             <label htmlFor="availabilityInput" className="m-1">
               Availability:
             </label>
@@ -373,33 +446,105 @@ export default function DogProfileCard({ dog, uid }) {
                 <option value={timeslot} key={id}></option>;
               })}
             </select>
+          </div> */}
+            {/* row 5 */}
+            <div className="grid grid-row-2 m-1">
+              <label htmlFor="">Description:</label>
+              <textarea
+                value={remark}
+                className="border-black border-2 m-1"
+                onChange={(e) => {
+                  setRemark(e.target.value);
+                }}
+              ></textarea>
+            </div>
+            {/* row 6 */}
+            <div>
+              <button
+                onClick={() => setModal((prev) => !prev)}
+                className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
+              >
+                Add Timeslot
+              </button>
+              <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>Add a timeslot</ModalHeader>
+                <ModalBody className="grid grid-cols-2 m-1 gap-2">
+                  <label>Date:</label>
+                  <input
+                    className="border-black border-1 rounded-sm"
+                    type="date"
+                    onChange={(e) => {
+                      setDate(e.target.value);
+                    }}
+                  ></input>
+                  <label>Start time:</label>
+                  <input
+                    className="border-black border-1 rounded-sm"
+                    type="time"
+                    onChange={(e) => {
+                      setStartTime(e.target.value);
+                    }}
+                  ></input>
+                  <label>End Time:</label>
+                  <input
+                    className="border-black border-1 rounded-sm"
+                    type="time"
+                    onChange={(e) => {
+                      setEndTime(e.target.value);
+                    }}
+                  ></input>
+                  <label>Pick-up Location:</label>
+                  <input
+                    className="border-black border-1 rounded-sm"
+                    type="text"
+                    onChange={(e) => {
+                      setPickUp(e.target.value);
+                    }}
+                  ></input>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    onClick={() => {
+                      addTimeSlot();
+                      clear();
+                      toggle();
+                    }}
+                  >
+                    Add Timeslot
+                  </Button>{" "}
+                  <Button
+                    onClick={() => {
+                      clear();
+                      toggle();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </Modal>
+              <button
+                onClick={() => updateDog(did)}
+                className="m-1 btn bg-blue-200 hover:bg-blue-300 font-bold"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => deleteDog(did)}
+                className="m-1 btn bg-red-200 hover:bg-red-300 font-bold"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-          {/* row 5 */}
-          <div className="grid grid-row-2 m-1">
-            <label htmlFor="">Description:</label>
-            <textarea
-              value={remark}
-              className="border-black border-2 m-1"
-              onChange={(e) => {
-                setRemark(e.target.value);
-              }}
-            ></textarea>
-          </div>
-          {/* row 6 */}
-          <div>
-            <button
-              onClick={() => updateDog(did)}
-              className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
-            >
-              Update
-            </button>
-            <button
-              onClick={() => deleteDog(did)}
-              className="m-1 btn bg-green-200 hover:bg-green-300 font-bold"
-            >
-              Delete
-            </button>
-          </div>
+        </div>
+        <div id="dogTimeslots">
+          <VacantBooking timeslot={null} />
+          <VacantBooking timeslot={null} />
+          {allTimeSlot.map((timeslot, i) => {
+            <div key={i}>
+              <VacantBooking timeslot={{ timeslot }} />
+            </div>;
+          })}
         </div>
       </div>
     </>
