@@ -44,6 +44,13 @@ function Header() {
           {loggedIn ? (
             <>
               <NavLink
+                to="/forum"
+                className="p-2 mr-5 border-2 hover:bg-orange-400 "
+              >
+                Forum
+              </NavLink>
+
+              <NavLink
                 to="/login"
                 className="p-2 mr-5 border-2 hover:bg-orange-400 "
                 onClick={() => signOut()}

@@ -23,7 +23,7 @@ function NavBar() {
         >
           Home
         </NavLink>
-        <button
+        {/* <button
           className="border-y-2 border-l-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
           onClick={() => {
             setOpenNotification((prev) => !prev);
@@ -34,7 +34,7 @@ function NavBar() {
           }}
         >
           Notification
-        </button>
+        </button> */}
 
         {!loggedIn ? null : userType == "OWNER" ? (
           <>
