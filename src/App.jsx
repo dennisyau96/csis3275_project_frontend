@@ -20,6 +20,7 @@ import Error from "./Views/Error/Error";
 import OwnerDogList from "./Views/OwnerDogList/OwnerDogList";
 import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
+import Forum from "./Views/Forum/Forum";
 
 export default function App() {
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -47,6 +48,8 @@ export default function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forum" element={<Forum />} />
+
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="/renter" element={<Renter />} />
             <Route path="/owner" element={<Owner />} /> */}

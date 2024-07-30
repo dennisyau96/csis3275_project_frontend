@@ -41,7 +41,6 @@ export default function Booking() {
     }
     displayDog();
     setUserId((prev) => sessionStorage.getItem("userID"));
-    getAllTimeSlot();
     getAllBooking();
   }, []);
 
@@ -60,55 +59,18 @@ export default function Booking() {
       });
 
       if (ownerDog.data.success == true) {
-        toast("displayed dog ");
         setMyDogs((prev) => ownerDog.data.data.dogs.content);
         localStorage.setItem(
           "myDogs",
           JSON.stringify(ownerDog.data.data.dogs.content)
         );
 
-        getAllTimeSlot();
-        // window.location.reload();
+        getTimeslot();
       } else {
-        toast("failed to display dog");
         setMyDogs([]);
-        // navigate("/login");
       }
     } catch (err) {
       console.log(err);
-    }
-  }
-
-  async function addTimeSlot() {
-    try {
-      const addTimeSlot = await axios.post(
-        baseURL + "/addTimeslot",
-        {
-          dog_id: dogId,
-          timeslots: [
-            {
-              date: date,
-              start_time: startTime,
-              end_time: endTime,
-              pickUp: pickUp,
-            },
-          ],
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: "Bearer " + token2,
-            Authorization1: "Bearer " + token2,
-          },
-        }
-      );
-
-      getAllTimeSlot();
-      toast("add timeslot successful.");
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-      toast("fail to add timeslot");
     }
   }
 
@@ -122,54 +84,19 @@ export default function Booking() {
     setStartTime();
   }
 
-  async function getAllTimeSlot() {
-    try {
-      const dogs = JSON.parse(localStorage.getItem("myDogs"));
-      dogs.forEach((dog) => {
-        dogIdArray.push(dog.id);
-      });
-
-      const allTimeSlotA = await axios.get(
-        "http://localhost:8082/api/getTimeslot/" + dog.id,
-
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: "Bearer " + token2,
-            Authorization1: "Bearer " + token2,
-          },
-        }
-      );
-      localStorage.setItem("alltimeslot", JSON.stringify(allTimeSlotA.data));
-      setAllTimeSlot((prev) => allTimeSlotA.data.data.timeslots);
-
-      setDogIds((prev) => dogIdArray);
-      const userId = sessionStorage.getItem("userID");
-
-      toast(allTimeSlotA.data.message);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   async function getAllBooking() {
     try {
-      const allBooking = await axios.get(
-        "http://localhost:8082/api/getBookings/" + userId,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: "Bearer " + token2,
-            Authorization1: "Bearer " + token2,
-          },
-        }
-      );
+      const allBooking = await axios.get(`${baseURL}/getBookings`, {
+        withCredentials: true,
+        headers: {
+          Authorization: "Bearer " + token2,
+          Authorization1: "Bearer " + token2,
+        },
+      });
       setAllBooking(allBooking);
       localStorage.setItem("allBooking", JSON.stringify(allBooking.data));
-      toast("load all booking successful");
     } catch (err) {
       console.log(err);
-      toast("fail to load all booking");
     }
   }
   return (
@@ -250,29 +177,25 @@ export default function Booking() {
           </ModalFooter>
         </Modal>
       </div>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="w-full h-auto bg-red-100 m-2 p-2 rounded-md">
+      <div className="grid grid-cols-2 gap-4 justify-center">
+        {/* <div className="w-full h-auto bg-red-100 m-2 p-2 rounded-md">
           <h2>Vacant Timeslot</h2>
-          <VacantBooking />
           {allTimeSlot &&
             allTimeSlot.map((timeslot, id) => {
               <div key={id}>
                 <VacantBooking timeslot={timeslot} />
               </div>;
             })}
-        </div>
+        </div> */}
 
         <div className="w-full block bg-blue-100 m-2 p-2 rounded-md">
           <h2>Booking Request</h2>
-          <BookingRequestCard />
-          <BookingRequestCard />
           <BookingRequestCard />
         </div>
 
         <div className="w-full h-auto  bg-yellow-100 m-2 p-2 rounded-md">
           <h2>Confirmed Booking</h2>
 
-          {}
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />

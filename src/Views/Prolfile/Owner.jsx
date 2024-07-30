@@ -23,52 +23,54 @@ function Owner() {
     <>
       {userData ? (
         <>
-          <h1>This is Owner page.</h1>
-          <div className="grid grid-cols-1 m-10 ">
-            <div className="row mb-4">
-              <label>User Name</label>
-              <input type="text" value={username} disabled={true} />
+          {/* <h1>This is Owner page.</h1> */}
+          <div className="">
+            <div className="grid grid-cols-1 container-sm justify-center">
+              <div className="row mb-4">
+                <label>User Name</label>
+                <input type="text" value={username} disabled={true} />
+              </div>
+              <div className="row mb-4">
+                <label>Introduction</label>
+                <textarea
+                  rows={5}
+                  cols={20}
+                  onChange={(e) => setIntroduction(e.target.value)}
+                  value={introduction}
+                />
+              </div>
+              <div className="row mb-4">
+                {" "}
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  onChange={(e) => {
+                    setTelephone(e.target.value);
+                  }}
+                  value={telephone}
+                />
+              </div>
+              <div className="row mb-4">
+                {" "}
+                <label>Email </label>
+                <input
+                  type="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  value={email}
+                />
+              </div>
+              <div className="">
+                <button className="p-2 m-2 border-black bg-gray-200 border-2  hover:bg-green-200 shadow-lg">
+                  Verify
+                </button>
+                <button className="p-2 m-2 border-black bg-gray-200 border-2 hover:bg-green-200 shadow-lg">
+                  {" "}
+                  Update
+                </button>
+              </div>
             </div>
-            <div className="row mb-4">
-              <label>Introduction</label>
-              <textarea
-                rows={5}
-                cols={20}
-                onChange={(e) => setIntroduction(e.target.value)}
-                value={introduction}
-              />
-            </div>
-            <div className="row mb-4">
-              {" "}
-              <label>Phone Number</label>
-              <input
-                type="tel"
-                onChange={(e) => {
-                  setTelephone(e.target.value);
-                }}
-                value={telephone}
-              />
-            </div>
-            <div className="row mb-4">
-              {" "}
-              <label>Email </label>
-              <input
-                type="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                value={email}
-              />
-            </div>
-          </div>
-          <div>
-            <button className="p-2 m-2 border-black bg-gray-200 border-2  hover:bg-green-200 shadow-lg">
-              Verify
-            </button>
-            <button className="p-2 m-2 border-black bg-gray-200 border-2 hover:bg-green-200 shadow-lg">
-              {" "}
-              Update
-            </button>
           </div>
         </>
       ) : (
