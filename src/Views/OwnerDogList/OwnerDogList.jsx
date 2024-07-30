@@ -122,10 +122,10 @@ function OwnerDogList() {
       );
 
       if (newDog.data.success == true) {
-        toast(newDog.data.message);
+        toast(newDog.data.data.message);
         window.location.reload();
       } else {
-        toast(newDog.data.message);
+        toast(newDog.data.data.message);
 
         window.location.reload();
       }
@@ -136,7 +136,7 @@ function OwnerDogList() {
 
   return (
     <>
-      <div className=" items-center">
+      <div className="">
         <h1 className="mr-9">Your Dog Profiles</h1>
         <br />
         <Button color="primary" onClick={toggle}>
@@ -445,7 +445,7 @@ function OwnerDogList() {
             <div className="flex flex-wrap">
               {myDogs.map((dog) => (
                 <div key={dog.id}>
-                  <DogProfileCard dog={dog} uid={owner_id} />
+                  <DogProfileCard dog={dog} />
                 </div>
               ))}
             </div>

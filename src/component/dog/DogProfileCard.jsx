@@ -7,7 +7,7 @@ import VacantBooking from "../ManageBooking/VacantBooking";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { sassNull } from "sass";
 
-export default function DogProfileCard({ dog, uid }) {
+export default function DogProfileCard({ dog }) {
   const [did, setDId] = useState(dog._id);
   const [name, setName] = useState(dog.name);
   const [gender, setGender] = useState(dog.sex);
@@ -22,7 +22,6 @@ export default function DogProfileCard({ dog, uid }) {
   const [availability, setAvailability] = useState([]);
   const [remark, setRemark] = useState(dog.profile_description);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [userIdUS, setuserIdUS] = useState({ uid });
   const [allTimeSlot, setAllTimeSlot] = useState([]);
 
   // for adding dog
@@ -30,7 +29,7 @@ export default function DogProfileCard({ dog, uid }) {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [pickUp, setPickUp] = useState();
-  const [duration, setDuration] = useState();
+  // const [duration, setDuration] = useState();
   const [modal, setModal] = useState(false);
 
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ export default function DogProfileCard({ dog, uid }) {
   async function addTimeSlot() {
     try {
       const addTimeSlot = await axios.post(
-        baseURL + "/addTimeslot",
+        `${baseURL}/addTimeslot`,
         {
           dog_id: did,
           timeslots: [
@@ -73,28 +72,44 @@ export default function DogProfileCard({ dog, uid }) {
         {
           withCredentials: true,
           headers: {
+            // Authorization: "Bearer " + data.data.data.token,
             Authorization: "Bearer " + token2,
             Authorization1: "Bearer " + token2,
           },
         }
       );
 
-      window.location.reload();
+      // window.location.reload();
+      toast("add new time slot");
+      getTimeslot();
     } catch (err) {
+      toast("failed to new timeslot");
       console.log(err);
     }
   }
 
-  async function getTimeslot(did) {
+  async function getTimeslot() {
     try {
-      const timeslotData = await axios.get(`${baseURL}/getTimeslot/${did}`);
+      const timeslotData = await axios.get(`${baseURL}/getTimeslot/${did}`, {
+        withCredentials: true,
+        headers: {
+          // Authorization: "Bearer " + data.data.data.token,
+          Authorization: "Bearer " + token2,
+          Authorization1: "Bearer " + token2,
+        },
+      });
       setAllTimeSlot(timeslotData.data.data.timeslots);
+      localStorage.removeItem("allTimeSlot");
+      localStorage.setItem(
+        "allTimeSlot",
+        JSON.stringify(timeslotData.data.data.timeslots)
+      );
     } catch (err) {
       console.log(err);
     }
   }
 
-  async function deleteDog(did) {
+  async function deleteDog() {
     const token2 = sessionStorage.getItem("token");
     try {
       const deleteDog = await axios.post(
@@ -116,7 +131,7 @@ export default function DogProfileCard({ dog, uid }) {
     }
   }
 
-  async function updateDog(did) {
+  async function updateDog() {
     const token2 = sessionStorage.getItem("token");
     try {
       const updateDog = await axios.post(
@@ -473,6 +488,7 @@ export default function DogProfileCard({ dog, uid }) {
                   <input
                     className="border-black border-1 rounded-sm"
                     type="date"
+                    value={date}
                     onChange={(e) => {
                       setDate(e.target.value);
                     }}
@@ -481,6 +497,7 @@ export default function DogProfileCard({ dog, uid }) {
                   <input
                     className="border-black border-1 rounded-sm"
                     type="time"
+                    value={startTime}
                     onChange={(e) => {
                       setStartTime(e.target.value);
                     }}
@@ -489,6 +506,7 @@ export default function DogProfileCard({ dog, uid }) {
                   <input
                     className="border-black border-1 rounded-sm"
                     type="time"
+                    value={endTime}
                     onChange={(e) => {
                       setEndTime(e.target.value);
                     }}
@@ -497,6 +515,7 @@ export default function DogProfileCard({ dog, uid }) {
                   <input
                     className="border-black border-1 rounded-sm"
                     type="text"
+                    value={pickUp}
                     onChange={(e) => {
                       setPickUp(e.target.value);
                     }}
@@ -506,12 +525,12 @@ export default function DogProfileCard({ dog, uid }) {
                   <Button
                     onClick={() => {
                       addTimeSlot();
-                      clear();
+                      // clear();
                       toggle();
                     }}
                   >
                     Add Timeslot
-                  </Button>{" "}
+                  </Button>
                   <Button
                     onClick={() => {
                       clear();
@@ -538,13 +557,11 @@ export default function DogProfileCard({ dog, uid }) {
           </div>
         </div>
         <div id="dogTimeslots">
-          <VacantBooking timeslot={null} />
-          <VacantBooking timeslot={null} />
-          {allTimeSlot.map((timeslot, i) => {
+          {allTimeSlot.map((timeslot, i) => (
             <div key={i}>
-              <VacantBooking timeslot={{ timeslot }} />
-            </div>;
-          })}
+              <VacantBooking timeslot={timeslot} />
+            </div>
+          ))}
         </div>
       </div>
     </>
