@@ -1,4 +1,4 @@
-export default function DogDetail({ dog }) {
+export default function DogDetail({ dog, dogImage }) {
   return (
     <>
       <div className="grid grid-cols-5 row">
@@ -27,6 +27,7 @@ export default function DogDetail({ dog }) {
       <div className="mt-10 row justify-center">
         <img
           className="h-80 w-80 justify-items-center"
+          src={dogImage}
           alt={`${dog.dog.name} photo`}
         />
       </div>
