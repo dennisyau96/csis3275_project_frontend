@@ -23,6 +23,7 @@ export default function DogProfileCard({ dog }) {
   const [remark, setRemark] = useState(dog.profile_description);
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [allTimeSlot, setAllTimeSlot] = useState([]);
+  const [dogImage, setDogImage] = useState();
 
   // for adding dog
   const [date, setDate] = useState();
@@ -38,6 +39,7 @@ export default function DogProfileCard({ dog }) {
 
   useEffect(() => {
     getTimeslot(did);
+    fetchImage();
   }, []);
 
   function toggle() {
@@ -52,6 +54,17 @@ export default function DogProfileCard({ dog }) {
     setEndTime();
     setPickUp();
     setStartTime();
+  }
+
+  async function fetchImage() {
+    try {
+      const response = await fetch(`https://dog.ceo/api/breeds/image/random`);
+      // const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+      const json = await response.json();
+      setDogImage(json.message);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function addTimeSlot() {
@@ -81,7 +94,7 @@ export default function DogProfileCard({ dog }) {
 
       // window.location.reload();
       toast("add new time slot");
-      getTimeslot();
+      window.location.reload();
     } catch (err) {
       toast("failed to new timeslot");
       console.log(err);
@@ -173,7 +186,7 @@ export default function DogProfileCard({ dog }) {
           className="grid grid-cols-6 bg-white m-6 p-4 rounded-md"
         >
           <div id="leftCol" className="  grid-rows-4 col-span-2">
-            <img className="h-64 w-64 m-1" src="" alt="dog photo"></img>
+            <img className="h-64 w-64 m-1" src={dogImage} alt="dog photo"></img>
             <button className="m-1 btn btn-primary">UploadPhoto</button>
           </div>
           <div id="rightCol" className=" grid-rows-6 col-span-4 m-1">

@@ -12,13 +12,29 @@ function DogCard({ dog }) {
   const [modalDetail, setModalDetail] = useState(false);
   const [modalApply, setModalApply] = useState(false);
   const [did, setDid] = useState(dog._id);
+  const [breed, setBreed] = useState(dog.breed);
   const [allTimeSlot, setAllTimeSlot] = useState([]);
+  const [dogImage, setDogImage] = useState();
+  const token2 = sessionStorage.getItem("token");
 
   useState(() => {
     getTimeslot();
+    fetchImage();
   }, []);
 
+  async function fetchImage() {
+    try {
+      const response = await fetch(`https://dog.ceo/api/breeds/image/random`);
+      // const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+      const json = await response.json();
+      setDogImage(json.message);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function applyTimeslot(tsid) {
+    //doBooking API
     try {
       const doBooking = await axios.post(
         `${baseURL}/book`,
@@ -61,7 +77,7 @@ function DogCard({ dog }) {
     <>
       <div className="border-2 m-4 w-60  hover:shadow-2xl hover:transition-all rounded-md shadow-md bg-white border-black">
         <div className="w-full h-36 p-1 ">
-          <img src="" alt="Dog Photo" className="w-full h-full " />
+          <img src={dogImage} alt="Dog Photo" className="w-full h-full " />
         </div>
 
         <div className="p-2">
@@ -84,9 +100,7 @@ function DogCard({ dog }) {
               className=" inline bg-orange-400 p-1 w-20 text-center  border-black border-2 shadow-sm  hover:bg-red-200"
               onClick={() => toggleApply()}
             >
-
               Apply
-             
             </button>
 
             <Modal isOpen={modalApply} toggle={() => toggleApply()}>
@@ -105,13 +119,10 @@ function DogCard({ dog }) {
                           toggleApply();
                         }}
                       >
-                        Date:{timeslot.date} <br />
-                        Start at:{timeslot.start_time} <br />
-                        End at:{timeslot.end_time}
+                        Date: {timeslot.date} <br />
+                        Start at: {timeslot.start_time} <br />
+                        End at: {timeslot.end_time}
                         <br />
-                        id:{timeslot._id}
-                        <br />
-                        dog id:{timeslot.dog_id}
                       </li>
                     ))}
                 </ul>
@@ -133,7 +144,7 @@ function DogCard({ dog }) {
                 More information about {dog.name}
               </ModalHeader>
               <ModalBody className="m-2 grid-flow-row gap-2">
-                <DogDetail dog={{ dog }} />
+                <DogDetail dog={{ dog }} dogImage={dogImage} />
               </ModalBody>
               <ModalFooter>
                 <Button

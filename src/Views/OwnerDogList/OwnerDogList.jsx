@@ -66,13 +66,16 @@ function OwnerDogList() {
 
   async function displayDog() {
     try {
-      const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + token2,
-          Authorization1: "Bearer " + token2,
-        },
-      });
+      const ownerDog = await axios.get(
+        baseURL + "/get-my-dogs?page_no=0&page_size=99999",
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
 
       if (ownerDog.data.success == true) {
         // toast.success(ownerDog.data.message);
