@@ -57,7 +57,7 @@ function VacantBooking({ timeslot }) {
             Update
           </button>
           <button className="  bg-orange-400 p-1 w-auto h-10  border-black border-2 shadow-sm  hover:bg-red-200 text-center">
-            Cancel
+            Delete
           </button>
         </div>
       </div>
