@@ -96,7 +96,7 @@ export default function Booking() {
           },
         }
       );
-      setAllBooking(allBookingData.data.data.booking.content);
+      setAllBooking(allBookingData.data.data.bookings.content);
       toast(allBookingData.data.message);
     } catch (err) {
       console.log(err);
@@ -181,7 +181,7 @@ export default function Booking() {
           </ModalFooter>
         </Modal> */}
       </div>
-      <div className="grid grid-cols-3 gap-6 justify-center">
+      <div className="grid grid-cols-2 gap-6 justify-center">
         {/* <div className="w-full h-auto bg-red-100 m-2 p-2 rounded-md">
           <h2>Vacant Timeslot</h2>
           {allTimeSlot &&
@@ -191,15 +191,21 @@ export default function Booking() {
               </div>;
             })}
         </div> */}
-        <div className="w-11/12 block bg-red-100 m-4 p-2 rounded-md"></div>
+        {/* <div className="w-11/12 block bg-red-100 m-4 p-2 rounded-md"></div> */}
 
         <div className="w-11/12 block bg-blue-100 m-4 p-2 rounded-md">
           <h2>Booking Request</h2>
-          {allBooking.map((booking, i) => {
-            <div key={i}>
-              <BookingRequestCard booking={booking} />
-            </div>;
-          })}
+          {/* <BookingRequestCard booking={{}} />
+          <BookingRequestCard booking={null} /> */}
+
+          {allBooking &&
+            allBooking.map((booking, i) => {
+              <div key={i}>
+                <BookingRequestCard booking={booking} />
+              </div>;
+            })}
+
+          {allBooking == [] && <h1>No Bookings</h1>}
         </div>
 
         <div className="w-11/12 h-auto  bg-yellow-100 m-4 p-2 rounded-md">
@@ -208,6 +214,12 @@ export default function Booking() {
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />
           <ConfirmedBookingCard />
+
+          {allBooking.map((booking, i) => {
+            <div key={i}>
+              <ConfirmedBookingCard />
+            </div>;
+          })}
         </div>
       </div>
     </>

@@ -51,7 +51,10 @@ function Header() {
 
   return (
     <>
-      <div className="sticky inset-x-0 top-0 bg-white shadow-lg bg-image ">
+      <div
+        className="sticky inset-x-0 top-0 bg-white shadow-lg  "
+        id="headerDiv"
+      >
         {/*---sign in sign up top bar---*/}
         <div className="block top-2 text-right p-4 inset-x-0   ">
           {loggedIn ? (
