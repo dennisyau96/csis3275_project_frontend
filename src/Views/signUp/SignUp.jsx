@@ -28,7 +28,7 @@ function SignUp() {
     setPhone("");
   }
 
-  async function register() {
+  async function register(arole) {
     if (password != confirmPassword) {
       return toast.error("Passwords do not match.");
     }
@@ -40,7 +40,7 @@ function SignUp() {
         firstName: firstName,
         lastName: lastName,
         phone: phone,
-        role: role,
+        role: arole,
       });
       if (data.data.success == true) {
         clearInput();
@@ -48,7 +48,7 @@ function SignUp() {
         window.location.reload();
         toast(data.data.message);
       }
-      toast(data.data.message);
+      toast("Please login.");
     } catch (err) {
       console.log(err);
     }
@@ -249,7 +249,7 @@ function SignUp() {
                     className="btn btn-primary"
                     onClick={() => {
                       setRole("OWNER");
-                      register();
+                      register(role);
                     }}
                     // data-bs-dismiss="modal"
                   >
@@ -260,7 +260,7 @@ function SignUp() {
                     className="btn bg-orange-200 hover:bg-orange-300"
                     onClick={() => {
                       setRole("RENTER");
-                      register();
+                      register(role);
                     }}
                     // data-bs-dismiss="modal"
                   >

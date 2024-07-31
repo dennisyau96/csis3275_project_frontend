@@ -3,17 +3,21 @@ import { useEffect } from "react";
 
 function Error() {
   const navigate = useNavigate();
+  const time = 2000;
 
   useEffect(() => {
     setTimeout(() => {
       navigate(-1);
-    }, 4000);
+    }, time);
   });
 
   return (
-    <div id="ErrorDiv">
+    <div id="ErrorDiv" className="h-full ">
       <h1>Oops! Somethings went wrong. </h1>
-      <p>No worries. You will be redirected to the previous page in 4s</p>
+      <p className="">
+        No worries. You will be redirected to the previous page in {time / 1000}
+        s
+      </p>
     </div>
   );
 }

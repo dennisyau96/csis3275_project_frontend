@@ -22,6 +22,7 @@ import OwnerDogList from "./Views/OwnerDogList/OwnerDogList";
 import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
 import BookingApplication from "./Views/Booking/BookingApplication";
+import Footer from "./component/Footer/Footer";
 export default function App() {
   // const [loggedIn, setLoggedIn] = useState(false);
   // const [username, setUsername] = useState("");
@@ -43,7 +44,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <section className="m-2">
+      <section className="m-2 h-100">
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
@@ -60,12 +61,16 @@ export default function App() {
             <Route path="/profile/renter" element={<Renter />} />
             <Route path="/profile/owner/doglist" element={<OwnerDogList />} />
             <Route path="/admin" element={<SystemAdmin />} />
-            <Route path="/bookingApplication" element={<BookingApplication/>}/>
+            <Route
+              path="/bookingApplication"
+              element={<BookingApplication />}
+            />
             {/* <Route path="/chatroom/:username" element={<Chatroom chatroom={} />} /> */}
             <Route path="/*" element={<Error />} />
           </Route>
         </Routes>
       </section>
+      <Footer />
       <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
     </>
   );

@@ -65,6 +65,11 @@ function Login() {
             JSON.stringify(userData.data.data.id)
           );
 
+          sessionStorage.setItem(
+            "userType",
+            JSON.stringify(userData.data.data.role)
+          );
+
           navigate("/");
           window.location.reload();
           // setTimeout(360000);
