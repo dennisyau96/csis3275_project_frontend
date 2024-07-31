@@ -35,7 +35,6 @@ function DogCard({ dog }) {
         }
       );
       toast.success("You have book the timeslot");
-      toggleApply();
     } catch (err) {
       console.log(err);
     }
@@ -43,13 +42,7 @@ function DogCard({ dog }) {
 
   async function getTimeslot() {
     try {
-      const timeslotData = await axios.get(`${baseURL}/getTimeslot/${did}`, {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + token2,
-          Authorization1: "Bearer " + token2,
-        },
-      });
+      const timeslotData = await axios.get(`${baseURL}/getTimeslot/${did}`);
       setAllTimeSlot((prev) => timeslotData.data.data.timeslots);
     } catch (err) {
       console.log(err);
@@ -102,21 +95,25 @@ function DogCard({ dog }) {
               </ModalHeader>
               <ModalBody className="m-2 grid-flow-row gap-2">
                 <ul>
-                  {allTimeSlot.map((timeslot, i) => (
-                    <li
-                      key={i}
-                      className="border-black border-2 m-4 p-2 rounded-md active:bg-gray-300 transition:all"
-                      onClick={() => applyTimeslot(timeslot._id)}
-                    >
-                      Date:{timeslot.date} <br />
-                      Start at:{timeslot.start_time} <br />
-                      End at:{timeslot.end_time}
-                      <br />
-                      id:{timeslot._id}
-                      <br />
-                      dog id:{timeslot.dog_id}
-                    </li>
-                  ))}
+                  {allTimeSlot &&
+                    allTimeSlot.map((timeslot, i) => (
+                      <li
+                        key={i}
+                        className="border-black border-2 m-4 p-2 rounded-md active:bg-gray-300 transition:all"
+                        onClick={() => {
+                          applyTimeslot(timeslot._id);
+                          toggleApply();
+                        }}
+                      >
+                        Date:{timeslot.date} <br />
+                        Start at:{timeslot.start_time} <br />
+                        End at:{timeslot.end_time}
+                        <br />
+                        id:{timeslot._id}
+                        <br />
+                        dog id:{timeslot.dog_id}
+                      </li>
+                    ))}
                 </ul>
               </ModalBody>
               <ModalFooter>
@@ -143,6 +140,7 @@ function DogCard({ dog }) {
                   color="secondary"
                   onClick={() => {
                     toggleDetail();
+
                     // clearInput();
                   }}
                 >
