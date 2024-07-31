@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { baseURL } from "../../../constant/constant";
 import toast from "react-hot-toast";
 import ChatBox from "../..//component/chatbox/ChatBox.jsx";
@@ -7,10 +7,38 @@ import ChatBox from "../..//component/chatbox/ChatBox.jsx";
 export default function Forum() {
   const [newMessage, setNewMessage] = useState();
   const [allMessage, setAllMessage] = useState([]);
+  const [userid, setUserid] = useState();
+
+  useEffect(() => {
+    getAllMessage();
+  }, []);
 
   const token2 = sessionStorage.getItem("token");
 
-  async function sendMessage() {}
+  async function sendMessage() {
+    try {
+      const sendMessageData = await axios.post(
+        `${baseURL}/sendMessage`,
+        {
+          receiver_id: userid,
+          message_content: newMessage,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + token2,
+            Authorization1: "Bearer " + token2,
+          },
+        }
+      );
+      window.location.reload();
+      toast.success("Sent!");
+      s;
+    } catch (err) {
+      console.log(err);
+      toast.error("Message not sent.");
+    }
+  }
 
   async function getAllMessage() {
     try {
@@ -24,10 +52,12 @@ export default function Forum() {
           },
         }
       );
-      toast(allMessageData.data.message);
-      setAllMessage((prev) => allMessageData.data.data.messageList.content);
+      toast.success(allMessageData.data.message);
+      setAllMessage(allMessageData.data.data.messageList.content);
     } catch (err) {
       console.log(err);
+      setAllMessage([]);
+      toast.error("No Message was displayed");
     }
   }
   return (
@@ -39,17 +69,14 @@ export default function Forum() {
           <ChatBox />
           <ChatBox />
           <ChatBox />
-          <ul>
-            {allMessage ? (
+          {/* <ul>
+            {allMessage &&
               allMessage.map((message, i) => (
                 <li key={i}>
                   <div className="m-4 p-4 bg-yellow-100">{message}</div>
                 </li>
-              ))
-            ) : (
-              <h1>There is no message</h1>
-            )}
-          </ul>
+              ))}
+          </ul> */}
           <div className=" p-4 bg-blue-100 m-4 rounded-lg">
             <input
               className="w-10/12"

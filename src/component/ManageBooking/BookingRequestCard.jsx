@@ -16,9 +16,9 @@ function BookingRequestCard({ booking }) {
           <p>Booking Request By:</p>
           <p></p>
           <p>Booking Request Date and Time:</p>
-          <p>{booking.booking_date}</p>
+          <p>{booking && booking.booking_date}</p>
           <p>Location:</p>
-          <p>{booking.location}</p>
+          <p>{booking && booking.location}</p>
         </div>
         <div className=" grid grid-cols-2 space-x-3 float-right m-4">
           <button className=" inline bg-red-400 p-1 w-30 text-center border-black border-2 shadow-sm hover:bg-blue-300">
