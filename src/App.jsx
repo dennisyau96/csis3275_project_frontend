@@ -21,8 +21,7 @@ import Error from "./Views/Error/Error";
 import OwnerDogList from "./Views/OwnerDogList/OwnerDogList";
 import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
-import Forum from "./Views/Forum/Forum";
-
+import BookingApplication from "./Views/Booking/BookingApplication";
 export default function App() {
   // const [loggedIn, setLoggedIn] = useState(false);
   // const [username, setUsername] = useState("");
@@ -61,6 +60,7 @@ export default function App() {
             <Route path="/profile/renter" element={<Renter />} />
             <Route path="/profile/owner/doglist" element={<OwnerDogList />} />
             <Route path="/admin" element={<SystemAdmin />} />
+            <Route path="/bookingApplication" element={<BookingApplication/>}/>
             {/* <Route path="/chatroom/:username" element={<Chatroom chatroom={} />} /> */}
             <Route path="/*" element={<Error />} />
           </Route>

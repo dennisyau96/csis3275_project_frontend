@@ -79,11 +79,14 @@ function DogCard({ dog }) {
             >
               Details
             </button>
+
             <button
               className=" inline bg-orange-400 p-1 w-20 text-center  border-black border-2 shadow-sm  hover:bg-red-200"
               onClick={() => toggleApply()}
             >
+
               Apply
+             
             </button>
 
             <Modal isOpen={modalApply} toggle={() => toggleApply()}>
