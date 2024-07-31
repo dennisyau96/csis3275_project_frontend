@@ -3,6 +3,7 @@ import NavBar from "../navBar/NavBar";
 // import { useContext } from "react";
 import React, { Component, useContext, useEffect, useState } from "react";
 // import { userContext } from "../../App";
+import Forum from "../../Views/Forum/Forum";
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");

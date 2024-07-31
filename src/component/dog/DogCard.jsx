@@ -86,7 +86,7 @@ function DogCard({ dog }) {
             >
 
               Apply
-              </NavLink>
+             
             </button>
 
             <Modal isOpen={modalApply} toggle={() => toggleApply()}>
