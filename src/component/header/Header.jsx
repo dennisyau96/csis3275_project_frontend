@@ -9,9 +9,11 @@ function Header() {
   const [username, setUsername] = useState("");
   const [userType, setUserType] = useState("");
   const [userData, setuserData] = useState();
+  const [dogImage, setDogImage] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchImage();
     const userDataJSON = JSON.parse(sessionStorage.getItem("userData"));
     if (userDataJSON != null && userDataJSON.success == true) {
       if (userDataJSON != null) {
@@ -34,6 +36,16 @@ function Header() {
       window.location.reload();
     } else {
       navigate(0);
+    }
+  }
+
+  async function fetchImage() {
+    try {
+      const response = await fetch("https://dog.ceo/api/breeds/image/random");
+      const json = await response.json();
+      setDogImage(json.message);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -85,11 +97,11 @@ function Header() {
 
         {/*---icon DogGo search bar---*/}
         <div className="  flex flex-wrap gap-auto pb-2 inset-x-0 items-center ">
-          <div id="headerLeftDiv" className="col flex flex-auto">
+          <div id="headerLeftDiv" className="col flex flex-auto ">
             <img
-              src="https://images.dog.ceo/breeds/akita/An_Akita_Inu_resting.jpg"
+              src={dogImage}
               alt="dog photo"
-              className="p-2 h-24 w-24"
+              className="p-2 h-36 w-36 rounded-3xl"
             ></img>
             <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer hover:text-7xl hover:text-orange-700">
               <NavLink to="/">DogGo!</NavLink>
