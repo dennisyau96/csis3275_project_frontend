@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { createContext, useEffect, useState, useContext } from "react";
+import Forum from "./Views/Forum/Forum";
 import { Toaster } from "react-hot-toast";
 // axios.defaults.auth = true;
 
