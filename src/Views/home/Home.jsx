@@ -30,8 +30,8 @@ export default function Home() {
           <div>Homepage</div>
         ) : (
           <div className="flex flex-wrap">
-            {dogs.map((dog) => (
-              <div key={dog.id}>
+            {dogs.map((dog, i) => (
+              <div key={i}>
                 <DogCard dog={dog} />
               </div>
             ))}

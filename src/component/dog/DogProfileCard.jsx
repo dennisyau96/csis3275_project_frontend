@@ -99,11 +99,6 @@ export default function DogProfileCard({ dog }) {
         },
       });
       setAllTimeSlot(timeslotData.data.data.timeslots);
-      localStorage.removeItem("allTimeSlot");
-      localStorage.setItem(
-        "allTimeSlot",
-        JSON.stringify(timeslotData.data.data.timeslots)
-      );
     } catch (err) {
       console.log(err);
     }
