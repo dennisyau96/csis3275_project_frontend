@@ -45,6 +45,8 @@ function SignUp() {
       if (data.data.success == true) {
         clearInput();
         navigate("/");
+        window.location.reload();
+        toast(data.data.message);
       }
       toast(data.data.message);
     } catch (err) {
@@ -246,8 +248,7 @@ function SignUp() {
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                      setRole("owner");
-                      setTimeout(1000);
+                      setRole("OWNER");
                       register();
                     }}
                     // data-bs-dismiss="modal"
@@ -258,8 +259,7 @@ function SignUp() {
                     type="button"
                     className="btn bg-orange-200 hover:bg-orange-300"
                     onClick={() => {
-                      setRole("renter");
-                      setTimeout(1000);
+                      setRole("RENTER");
                       register();
                     }}
                     // data-bs-dismiss="modal"

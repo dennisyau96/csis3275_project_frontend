@@ -27,6 +27,7 @@ function Header() {
   function signOut() {
     if (window.confirm("Are you sure to sign out?")) {
       sessionStorage.clear();
+      localStorage.clear();
       setLoggedIn(false);
       navigate("/");
       window.location.reload();
@@ -42,6 +43,13 @@ function Header() {
         <div className="block top-2 text-right p-4 inset-x-0   ">
           {loggedIn ? (
             <>
+              <NavLink
+                to="/forum"
+                className="p-2 mr-5 border-2 hover:bg-orange-400 "
+              >
+                Forum
+              </NavLink>
+
               <NavLink
                 to="/login"
                 className="p-2 mr-5 border-2 hover:bg-orange-400 "

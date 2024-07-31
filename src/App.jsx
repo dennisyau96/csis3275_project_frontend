@@ -21,7 +21,6 @@ import OwnerDogList from "./Views/OwnerDogList/OwnerDogList";
 import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
 import BookingApplication from "./Views/Booking/BookingApplication";
-
 export default function App() {
   // const [loggedIn, setLoggedIn] = useState(false);
   // const [username, setUsername] = useState("");
@@ -48,6 +47,8 @@ export default function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forum" element={<Forum />} />
+
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="/renter" element={<Renter />} />
             <Route path="/owner" element={<Owner />} /> */}
@@ -64,7 +65,7 @@ export default function App() {
           </Route>
         </Routes>
       </section>
-      <Toaster position="left-center" />
+      <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
     </>
   );
 }

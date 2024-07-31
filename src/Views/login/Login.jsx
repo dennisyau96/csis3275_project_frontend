@@ -60,8 +60,15 @@ function Login() {
           setUserData(userData.data);
           console.log(userData.data);
           sessionStorage.setItem("userData", JSON.stringify(userData.data));
+          sessionStorage.setItem(
+            "userID",
+            JSON.stringify(userData.data.data.id)
+          );
+
           navigate("/");
           window.location.reload();
+          // setTimeout(360000);
+          // sessionStorage.clear();
         } catch (err) {
           console.log(err);
         }
