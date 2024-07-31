@@ -75,14 +75,14 @@ function OwnerDogList() {
       });
 
       if (ownerDog.data.success == true) {
-        toast.success(ownerDog.data.message);
+        // toast.success(ownerDog.data.message);
         setMyDogs((prev) => ownerDog.data.data.dogs.content);
         localStorage.setItem(
           "myDogs",
           JSON.stringify(ownerDog.data.data.dogs.content)
         );
       } else {
-        toast.error(ownerDog.data.message);
+        // toast.error(ownerDog.data.message);
         setMyDogs([]);
         navigate("/login");
       }
