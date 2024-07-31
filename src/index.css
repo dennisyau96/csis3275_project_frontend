@@ -54,3 +54,10 @@ button {
   background-color: white;
   border: 1px solid black;
 }
+
+.headerDiv {
+  background-image: url("../../frontend/src/assets/react.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
