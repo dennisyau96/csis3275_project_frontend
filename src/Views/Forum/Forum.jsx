@@ -33,7 +33,7 @@ export default function Forum() {
       );
       window.location.reload();
       toast.success("Sent!");
-      s;
+      getAllMessage();
     } catch (err) {
       console.log(err);
       toast.error("Message not sent.");
@@ -43,7 +43,7 @@ export default function Forum() {
   async function getAllMessage() {
     try {
       const allMessageData = await axios.get(
-        `${baseURL}/getMessage?page_no=0&page_size=99999`,
+        `${baseURL}/getMessages?page_no=0&page_size=99999`,
         {
           withCredentials: true,
           headers: {
@@ -69,14 +69,16 @@ export default function Forum() {
           <ChatBox />
           <ChatBox />
           <ChatBox />
-          {/* <ul>
+          <ul>
             {allMessage &&
               allMessage.map((message, i) => (
                 <li key={i}>
-                  <div className="m-4 p-4 bg-yellow-100">{message}</div>
+                  <div className="m-4 p-4 bg-yellow-100">
+                    <ChatBox />
+                  </div>
                 </li>
               ))}
-          </ul> */}
+          </ul>
           <div className=" p-4 bg-blue-100 m-4 rounded-lg">
             <input
               className="w-10/12"

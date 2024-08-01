@@ -53,8 +53,8 @@ export default function Booking() {
       const ownerDog = await axios.get(baseURL + "/get-my-dogs", {
         withCredentials: true,
         headers: {
-          Authorization: "Bearer " + token2,
-          Authorization1: "Bearer " + token2,
+          Authorization: "Bearer " + token,
+          Authorization1: "Bearer " + token,
         },
       });
 
@@ -91,8 +91,8 @@ export default function Booking() {
         {
           withCredentials: true,
           headers: {
-            Authorization: "Bearer " + token2,
-            Authorization1: "Bearer " + token2,
+            Authorization: "Bearer " + token,
+            Authorization1: "Bearer " + token,
           },
         }
       );
@@ -182,21 +182,10 @@ export default function Booking() {
         </Modal> */}
       </div>
       <div className="grid grid-cols-2 gap-6 justify-center">
-        {/* <div className="w-full h-auto bg-red-100 m-2 p-2 rounded-md">
-          <h2>Vacant Timeslot</h2>
-          {allTimeSlot &&
-            allTimeSlot.map((timeslot, id) => {
-              <div key={id}>
-                <VacantBooking timeslot={timeslot} />
-              </div>;
-            })}
-        </div> */}
-        {/* <div className="w-11/12 block bg-red-100 m-4 p-2 rounded-md"></div> */}
-
         <div className="w-11/12 block bg-blue-100 m-4 p-2 rounded-md">
           <h2>Booking Request</h2>
-          {/* <BookingRequestCard booking={{}} />
-          <BookingRequestCard booking={null} /> */}
+          <BookingRequestCard booking={{}} />
+          <BookingRequestCard booking={null} />
 
           {allBooking &&
             allBooking.map((booking, i) => {

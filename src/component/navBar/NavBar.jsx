@@ -19,7 +19,7 @@ function NavBar() {
     <>
       <nav className="flex flex-wrap inset-x-0 border-b-2 border-black justify-end container-fluid text-sm right-0  ">
         <NavLink
-          className="border-y-2 border-r-2 border-l-2 px-2 py-0.5 hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
+          className="border-y-2 border-r-2 border-l-2 px-2 py-0.5 hover:bg-orange-400 hover:text-white active:bg-green-400  active:text-white"
           to="/"
         >
           Home
@@ -62,9 +62,9 @@ function NavBar() {
           <>
             <NavLink
               className="border-y-2 border-x-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"
-              to="/booking"
+              to="/renter-booking"
             >
-              Manage Booking
+              Requested Booking
             </NavLink>
             <NavLink
               className="border-y-2 border-x-2  px-2 py-0.5   hover:bg-orange-400 hover:text-white active:bg-green-400 active:text-white"

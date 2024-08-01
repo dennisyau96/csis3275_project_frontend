@@ -19,8 +19,9 @@ function Renter() {
   }, []);
   return (
     <>
-      <h1>This is renter page.</h1>
-      <div className="grid grid-cols-1 m-10 ">
+      <div className="grid grid-cols-1  container-sm justify-center bg-green-100 p-14 rounded-md m-10">
+        <h1 className="text-3xl mb-10">Renter Profile</h1>
+
         <div className="row mb-4">
           <label>User Name</label>
           <input type="text" value={username} disabled={true} />
@@ -56,10 +57,15 @@ function Renter() {
             value={email}
           />
         </div>
-      </div>
-      <div>
-        <button className="p-2 m-2 bg-gray-200">Verify</button>
-        <button className="p-2 m-2 bg-gray-200"> Update</button>
+        <div>
+          <button className="p-2 m-2 border-black bg-gray-200 border-2  hover:bg-green-200 shadow-lg">
+            Verify
+          </button>
+          <button className="p-2 m-2 border-black bg-gray-200 border-2 hover:bg-green-200 shadow-lg">
+            {" "}
+            Update
+          </button>
+        </div>
       </div>
     </>
   );
