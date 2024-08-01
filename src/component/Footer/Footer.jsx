@@ -3,26 +3,26 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-white text-black  h-40 bottom-0 ">
-        <div className="container fluid flex flex-col  justify-between items-center">
+        <div className="container fluid flex flex-col gap-4 justify-between items-center">
           <div className="">
-            <a href="/" className="text-lg font-bold">
+            <Link to="/" className="text-xl font-bold ">
               DogGo
-            </a>
+            </Link>
           </div>
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <Link to="/about" className="hover:text-gray-400">
+                <Link to="/about" className="hover:text-gray-400 underline">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-gray-400">
+                <Link to="/services" className="hover:text-gray-400 underline">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-gray-400">
+                <Link to="/contact" className="hover:text-gray-400 underline">
                   Contact
                 </Link>
               </li>

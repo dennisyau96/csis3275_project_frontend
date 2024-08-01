@@ -23,24 +23,8 @@ import Booking from "./Views/Booking/Booking";
 import Chatroom from "./Views/Chatroom/Chatroom";
 import BookingApplication from "./Views/Booking/BookingApplication";
 import Footer from "./component/Footer/Footer";
+import RenterBooking from "./Views/RequestedBooking/RenterBooking";
 export default function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-  // const [username, setUsername] = useState("");
-  // const [userType, setUserType] = useState("");
-
-  // useEffect(() => {
-  //   const userDataJSON = JSON.parse(localStorage.getItem("userData"));
-  //   if (userDataJSON.success) {
-  //     setLoggedIn((prev) => true);
-  //     setUsername((prev) => JSON.stringify(userDataJSON.data.data.username));
-  //     setUserType((prev) => setUserType(userDataJSON.data.data.role));
-  //   } else {
-  //     setLoggedIn((prev) => false);
-  //     setUsername((prev) => "");
-  //     setUserType((prev) => "");
-  //   }
-  // }, []);
-
   return (
     <>
       <Header />
@@ -50,11 +34,9 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forum" element={<Forum />} />
-
+            <Route path="renter-booking" element={<RenterBooking />} />
             <Route path="/signup" element={<SignUp />} />
-            {/* <Route path="/renter" element={<Renter />} />
-            <Route path="/owner" element={<Owner />} /> */}
-            {/* <Route path="/notification" element={<Home />} /> */}
+
             <Route path="/booking" element={<Booking />} />
             <Route path="/dogs" />
             <Route path="/profile/owner" element={<Owner />} />
@@ -65,13 +47,12 @@ export default function App() {
               path="/bookingApplication"
               element={<BookingApplication />}
             />
-            {/* <Route path="/chatroom/:username" element={<Chatroom chatroom={} />} /> */}
             <Route path="/*" element={<Error />} />
           </Route>
         </Routes>
       </section>
       <Footer />
-      <Toaster position="bottom-center" toastOptions={{ duration: 1000 }} />
+      <Toaster position="bottom-center" toastOptions={{ duration: 2000 }} />
     </>
   );
 }

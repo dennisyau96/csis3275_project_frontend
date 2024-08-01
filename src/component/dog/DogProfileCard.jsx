@@ -93,8 +93,9 @@ export default function DogProfileCard({ dog }) {
       );
 
       // window.location.reload();
-      toast("add new time slot");
       window.location.reload();
+      toast(addTimeSlot.data.message + " to add new time slot");
+      getTimeslot();
     } catch (err) {
       toast("failed to new timeslot");
       console.log(err);
@@ -118,7 +119,6 @@ export default function DogProfileCard({ dog }) {
   }
 
   async function deleteDog() {
-    const token2 = sessionStorage.getItem("token");
     try {
       const deleteDog = await axios.post(
         `${baseURL}/deleteDog`,
@@ -139,27 +139,24 @@ export default function DogProfileCard({ dog }) {
     }
   }
 
-  async function updateDog() {
-    const token2 = sessionStorage.getItem("token");
+  async function updateDog(did) {
     try {
       const updateDog = await axios.post(
         `${baseURL}/updateDog`,
+
         {
           _id: did,
-          name: name,
-          breed: breed,
-          age: age,
+          breed: "Test3",
+          age: 20,
           sex: gender,
-          additional_message: "",
           profile_pic: picture,
           rental_price_per_hour: price,
           location: location,
           desexed: sterilized,
           vaccinated: vaccinated,
           profile_description: remark,
-          average_rating: null,
-          owner_id: userIdUS,
         },
+
         {
           withCredentials: true,
           headers: {
@@ -168,10 +165,10 @@ export default function DogProfileCard({ dog }) {
           },
         }
       );
-      if (updateDog.data.success) {
-        toast("successfully updated");
-      }
+      toast(updateDog.data.message + " to update dog profile.");
+
       window.location.reload();
+      // toast(updateDog.data.message + " to update dog profile.");
     } catch (err) {
       console.log(err);
       window.location.reload();
@@ -203,16 +200,6 @@ export default function DogProfileCard({ dog }) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-              />
-              <label htmlFor="idInput" className="m-1">
-                id:
-              </label>
-              <input
-                type="text"
-                className="m-1"
-                value={did}
-                id="idInput"
-                readOnly
               />
             </div>
             {/* row 2*/}
@@ -424,12 +411,20 @@ export default function DogProfileCard({ dog }) {
                 className="m-1"
                 type="checkbox"
                 id="sterilizedInput"
-                // value={sterilized}
                 checked={sterilized && true}
                 onChange={() => {
                   setSterilized((prev) => !prev);
                 }}
               />
+
+              <br></br>
+              <label className="m-1">Location:</label>
+              <input
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+              ></input>
 
               <label htmlFor="vaccinatedInput" className="m-1">
                 Vaccinated:
@@ -450,6 +445,7 @@ export default function DogProfileCard({ dog }) {
                 Price(per hour):
               </label>
               <input
+                name="priceInput"
                 type="number"
                 className="m-1"
                 value={price}
@@ -459,17 +455,7 @@ export default function DogProfileCard({ dog }) {
               />
             </div>
             {/* row 4 */}
-            {/* <div>
-            <label htmlFor="availabilityInput" className="m-1">
-              Availability:
-            </label>
-            <select id="availabilityInput" className="m-1">
-              <option>--No availability--</option>
-              {availability.map((timeslot, id) => {
-                <option value={timeslot} key={id}></option>;
-              })}
-            </select>
-          </div> */}
+
             {/* row 5 */}
             <div className="grid grid-row-2 m-1">
               <label htmlFor="">Description:</label>
@@ -556,7 +542,7 @@ export default function DogProfileCard({ dog }) {
                 Update
               </button>
               <button
-                onClick={() => deleteDog(did)}
+                onClick={() => deleteDog()}
                 className="m-1 btn bg-red-200 hover:bg-red-300 font-bold"
               >
                 Delete
