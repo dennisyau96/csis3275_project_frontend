@@ -19,6 +19,8 @@ function BookingRequestCard({ booking }) {
           <p>{booking && booking.booking_date}</p>
           <p>Location:</p>
           <p>{booking && booking.location}</p>
+          <p>complete:</p>
+          <p>{booking && booking.booking_complete}</p>
         </div>
         <div className=" grid grid-cols-2 space-x-3 float-right m-4">
           <button className=" inline bg-red-400 p-1 w-30 text-center border-black border-2 shadow-sm hover:bg-blue-300">

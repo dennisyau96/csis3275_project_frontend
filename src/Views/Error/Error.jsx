@@ -12,7 +12,7 @@ function Error() {
   });
 
   return (
-    <div id="ErrorDiv" className="h-full ">
+    <div id="ErrorDiv" className="h-96 ">
       <h1>Oops! Somethings went wrong. </h1>
       <p className="">
         No worries. You will be redirected to the previous page in {time / 1000}

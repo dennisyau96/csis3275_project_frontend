@@ -25,7 +25,8 @@ function Owner() {
         <>
           {/* <h1>This is Owner page.</h1> */}
           <div className="">
-            <div className="grid grid-cols-1 container-sm justify-center">
+            <div className="grid grid-cols-1 container-sm justify-center bg-orange-200 p-14 rounded-md m-10">
+              <h1 className="text-3xl mb-10">Owner Profile</h1>
               <div className="row mb-4">
                 <label>User Name</label>
                 <input type="text" value={username} disabled={true} />

@@ -14,6 +14,8 @@ function Header() {
 
   useEffect(() => {
     fetchImage();
+    setInterval(() => fetchImage(), 6000); //change the header logo every 6000ms
+
     const userDataJSON = JSON.parse(sessionStorage.getItem("userData"));
     if (userDataJSON != null && userDataJSON.success == true) {
       if (userDataJSON != null) {
@@ -88,12 +90,6 @@ function Header() {
               >
                 Sign up
               </NavLink>
-              <NavLink
-                to="/admin"
-                className="p-2 border-2 mr-1 hover:bg-orange-400"
-              >
-                admin
-              </NavLink>
             </>
           )}
         </div>
@@ -104,7 +100,7 @@ function Header() {
             <img
               src={dogImage}
               alt="dog photo"
-              className="p-2 h-36 w-36 rounded-3xl"
+              className="p-2 h-36 w-36 rounded-3xl transition-all duration-1000"
             ></img>
             <h1 className="p-2 text-6xl text-orange-500 font-bold cursor-pointer hover:text-7xl hover:text-orange-700">
               <NavLink to="/">DogGo!</NavLink>
