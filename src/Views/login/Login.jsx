@@ -16,6 +16,10 @@ function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    clearUserData();
+  }, []);
+
   function clearInput() {
     setUsername("");
     setPassword("");
