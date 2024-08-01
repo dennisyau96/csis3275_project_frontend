@@ -5,6 +5,7 @@ import DogDetail from "./DogDetail";
 import { baseURL } from "../../../constant/constant";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const token2 = sessionStorage.getItem("token");
 
@@ -14,8 +15,10 @@ function DogCard({ dog }) {
   const [did, setDid] = useState(dog._id);
   const [breed, setBreed] = useState(dog.breed);
   const [allTimeSlot, setAllTimeSlot] = useState([]);
-  const [dogImage, setDogImage] = useState();
+  const [dogImage, setDogImage] = useState([]);
   const token2 = sessionStorage.getItem("token");
+
+  const navigate = useNavigate();
 
   useState(() => {
     getTimeslot();
@@ -27,7 +30,8 @@ function DogCard({ dog }) {
       const response = await fetch(`https://dog.ceo/api/breeds/image/random`);
       // const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
       const json = await response.json();
-      setDogImage(json.message);
+
+      setDogImage((prev) => json.message);
     } catch (error) {
       console.log(error);
     }
@@ -35,6 +39,7 @@ function DogCard({ dog }) {
 
   async function applyTimeslot(tsid) {
     //doBooking API
+
     try {
       const doBooking = await axios.post(
         `${baseURL}/book`,
@@ -50,9 +55,13 @@ function DogCard({ dog }) {
           },
         }
       );
+
+      // window.location.reload();
       toast.success("You have book the timeslot");
+      sessionStorage.setItem("newBooking", JSON.stringify(doBooking.data));
     } catch (err) {
       console.log(err);
+      toast.error("failed to book the time slot");
     }
   }
 
@@ -108,24 +117,38 @@ function DogCard({ dog }) {
                 Apply for the timeslot(s)
               </ModalHeader>
               <ModalBody className="m-2 grid-flow-row gap-2">
-                <ul>
-                  {allTimeSlot &&
-                    allTimeSlot.map((timeslot, i) => (
+                {allTimeSlot ? (
+                  <ul>
+                    {allTimeSlot.map((timeslot, i) => (
                       <li
                         key={i}
                         className="border-black border-2 m-4 p-2 rounded-md active:bg-gray-300 transition:all"
                         onClick={() => {
-                          applyTimeslot(timeslot._id);
-                          toggleApply();
+                          if (sessionStorage.getItem("token") != null) {
+                            if (!timeslot.booked) {
+                              applyTimeslot(timeslot._id);
+                              toggleApply();
+                              toast.success(timeslot.data.message);
+                            } else {
+                              toast.error("This time slot is booked.");
+                            }
+                          } else {
+                            toast.error("please login to book the time slot.");
+                          }
                         }}
                       >
                         Date: {timeslot.date} <br />
                         Start at: {timeslot.start_time} <br />
                         End at: {timeslot.end_time}
                         <br />
+                        Booked:{timeslot.booked ? "Yes" : "No"}
+                        <br />
                       </li>
                     ))}
-                </ul>
+                  </ul>
+                ) : (
+                  <h1>No timeslot</h1>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button

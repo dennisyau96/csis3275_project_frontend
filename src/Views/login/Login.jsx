@@ -21,11 +21,15 @@ function Login() {
     setPassword("");
   }
 
-  async function login() {
-    try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userData");
+  function clearUserData() {
+    sessionStorage.clear();
+    localStorage.clear();
+    setLoggedIn(false);
+  }
 
+  async function login() {
+    clearUserData();
+    try {
       const data = await axios.post(baseURL + "/auth/login", {
         username: username,
         password: password,
