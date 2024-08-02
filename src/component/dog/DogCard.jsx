@@ -86,7 +86,11 @@ function DogCard({ dog }) {
     <>
       <div className="border-2 m-4 w-60  hover:shadow-2xl hover:transition-all rounded-md shadow-md bg-white border-black">
         <div className="w-full h-36 p-1 ">
-          <img src={dogImage} alt="Dog Photo" className="w-full h-full " />
+          <img
+            src={dog.profile_pic}
+            alt="Dog Photo"
+            className="w-full h-full "
+          />
         </div>
 
         <div className="p-2">

@@ -390,8 +390,10 @@ function OwnerDogList() {
               <input
                 type="checkbox"
                 value={sterized}
-                onChange={(e) => setSterized(e.target.checked)}
-                className="border-black border-solid border-2 rounded-lg align-self-center"
+                className="border-black border-solid border-2 rounded-lg"
+                onClick={(e) => {
+                  setVaccinated(e.target.checked);
+                }}
               ></input>
               <span className="ml-2">Yes</span>
             </div>
