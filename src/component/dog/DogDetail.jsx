@@ -27,7 +27,7 @@ export default function DogDetail({ dog, dogImage }) {
       <div className="mt-10 row justify-center">
         <img
           className="h-80 w-80 justify-items-center"
-          src={dogImage}
+          src={`${dog.dog.profile_pic}`}
           alt={`${dog.dog.name} photo`}
         />
       </div>
