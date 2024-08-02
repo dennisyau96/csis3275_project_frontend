@@ -32,13 +32,14 @@ export default function DogProfileCard({ dog }) {
   const [pickUp, setPickUp] = useState();
   // const [duration, setDuration] = useState();
   const [modal, setModal] = useState(false);
+  const [pic, setPic] = useState();
 
   const navigate = useNavigate();
 
   const token2 = sessionStorage.getItem("token");
 
   useEffect(() => {
-    getTimeslot(did);
+    // getTimeslot(did);
     fetchImage();
   }, []);
 
@@ -54,6 +55,7 @@ export default function DogProfileCard({ dog }) {
     setEndTime();
     setPickUp();
     setStartTime();
+    setPic();
   }
 
   async function fetchImage() {
@@ -141,7 +143,7 @@ export default function DogProfileCard({ dog }) {
 
   async function updateDog(did) {
     try {
-      console.log("update" + picture)
+      console.log("update" + picture);
       const updateDog = await axios.post(
         `${baseURL}/updateDog`,
 
@@ -177,19 +179,19 @@ export default function DogProfileCard({ dog }) {
   }
 
   function getBase64(file) {
-    try{
-      return new Promise(resolve => {
+    try {
+      return new Promise((resolve) => {
         let fileInfo;
         let baseURL = "";
-      // Make new FileReader
+        // Make new FileReader
         let reader = new FileReader();
 
-      // Convert the file to base64 text
+        // Convert the file to base64 text
         reader.readAsDataURL(file);
 
-      // on reader load somthing...
+        // on reader load somthing...
         reader.onload = () => {
-        // Make a fileInfo Object
+          // Make a fileInfo Object
           console.log("Called", reader);
           baseURL = reader.result;
           console.log(baseURL);
@@ -197,8 +199,7 @@ export default function DogProfileCard({ dog }) {
         };
         console.log(fileInfo);
       });
-    }
-    catch (err){
+    } catch (err) {
       console.log(err);
     }
   }
@@ -212,8 +213,8 @@ export default function DogProfileCard({ dog }) {
         >
           <div id="leftCol" className="  grid-rows-4 col-span-2">
             <img className="h-64 w-64 m-1" src={picture} alt="dog photo"></img>
-            <input 
-              type="file" 
+            <input
+              type="file"
               className="m-1 btn btn-primary"
               onChange={(e) => {
                 // console.log(e.target.files[0]);
@@ -222,26 +223,27 @@ export default function DogProfileCard({ dog }) {
                 let file = e.target.files[0];
 
                 getBase64(file)
-                .then(result => {
-                  // file["base64"] = result;
-                  console.log("File Is", file);
+                  .then((result) => {
+                    // file["base64"] = result;
+                    console.log("File Is", file);
 
-                  setProfilePic(result);
+                    setProfilePic(result);
 
-                  // this.setState({
-                  //   base64URL: result,
-                  //   file
-                  // });
-                })
-                .catch(err => {
-                  console.log(err);
-                });
+                    // this.setState({
+                    //   base64URL: result,
+                    //   file
+                    // });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
 
                 this.setState({
-                  file: e.target.files[0]
+                  file: e.target.files[0],
                 });
               }}
-              />UploadPhoto
+            />
+            UploadPhoto
           </div>
           <div id="rightCol" className=" grid-rows-6 col-span-4 m-1">
             {/* row 1 */}
